@@ -69,6 +69,17 @@
   .rmain{flex:1;min-width:0}
   .rname{font-size:17px;font-weight:800;letter-spacing:-.3px;margin:1px 0 1px;display:flex;align-items:center;gap:7px;flex-wrap:wrap}
   .vibebadge{font-size:9.5px;font-weight:800;background:var(--gold);color:#fff;padding:2px 7px;border-radius:999px;letter-spacing:.4px}
+  .status,.csr{font-size:9.5px;font-weight:800;padding:2px 7px;border-radius:999px;letter-spacing:.2px;white-space:nowrap}
+  .status.open{background:#e7f7ee;color:#15924f;border:1px solid #b6e3cb}
+  .status.closed{background:#fdeaec;color:#c0182b;border:1px solid #f3c7cc}
+  .csr.ok{background:#e7f7ee;color:#15924f;border:1px solid #b6e3cb}
+  .csr.no{background:#fdeaec;color:#c0182b;border:1px solid #f3c7cc}
+  .csr.unk{background:#f2efe8;color:#897a5c;border:1px solid #e6ddca}
+  a.gift{flex:1;text-align:center;text-decoration:none;font-size:12px;font-weight:700;padding:8px 6px;border-radius:9px;
+        border:1px solid #e8c98f;color:#8a5a12;background:#fdf6e9;min-width:72px}
+  a.gift:hover{background:#f8ebcf}
+  .badgekey{font-size:11px;color:var(--sub);margin:4px 2px 0;line-height:1.5}
+  .badgekey b{color:#15924f}.badgekey .x{color:#c0182b}
   .rcuis{font-size:12px;color:var(--sub)}
   .rcuis .cat{display:inline-block;background:var(--red-soft);color:var(--red2);font-weight:700;border-radius:5px;padding:1px 6px;margin-right:5px;font-size:11px}
   .ratings{display:flex;gap:7px;flex-wrap:wrap;margin:7px 0 3px}
@@ -172,6 +183,7 @@
   <div class="app" id="app">
     <div>
       <div class="count" id="count"></div>
+      <div class="badgekey">🟢 <b>Open</b> / 🔴 <span class="x">Closed</span> = live, Pacific time · ✓ Verified / ? Unverified / ✗ Denied = $300 dining-credit status from <a href="https://csr-dining.edgerunners.cloud/" target="_blank" rel="noopener">csr-dining.edgerunners.cloud</a> · 🎁 = gift-card link (a known way to trigger the credit)</div>
       <div class="list" id="list"></div>
     </div>
     <aside class="mapcol">
@@ -206,7 +218,7 @@
     <a href="https://www.opentable.com/c/chasedining/" target="_blank" rel="noopener">Chase Dining page</a>,
     book an Exclusive Table, dine, and pay with the Reserve — up to $150 posts back as a statement credit (per half-year, max $300/yr).
     Full list: <a href="https://www.opentable.com/sapphire-reserve/los-angeles" target="_blank" rel="noopener">OpenTable · Sapphire Reserve · Los Angeles</a>.
-    <div class="foot-note">Built Jun 18 2026 · ratings, prices &amp; review sentiment gathered from official sites, Google, Yelp &amp; OpenTable and may shift — confirm on the restaurant’s page when booking. Pros/cons distilled from real customer reviews.</div>
+    <div class="foot-note">Built Jun 18 2026 · ratings, prices &amp; review sentiment gathered from official sites, Google, Yelp &amp; OpenTable and may shift — confirm on the restaurant’s page when booking. Pros/cons distilled from real customer reviews. Open/Closed is computed live in your browser from each restaurant's posted hours (Pacific time) — double-check before driving. The ✓/?/✗ dining-credit status and 🎁 gift-card links are community-sourced from <a href="https://csr-dining.edgerunners.cloud/" target="_blank" rel="noopener">csr-dining.edgerunners.cloud</a> (a few gift links route through an affiliated/parent Toast account) — not official Chase data.</div>
   </footer>
 </div>
 
@@ -754,6 +766,68 @@ const EXTRA={
  "Vintana Wine + Dine":{hours:"Tue–Sun 11:30am–9pm · Mon closed",img:"https://www.dinevintana.com/wp-content/uploads/2023/05/About-Us-square-1.jpg"}
 };
 
+// Sapphire $300 dining-credit status + gift-card link, sourced from csr-dining.edgerunners.cloud
+const CSR={
+ "The Nice Guy":{v:"unknown",g:""},
+ "Delilah":{v:"unknown",g:""},
+ "Steak 48":{v:"verified",g:"https://steak48beverlyhills.securetree.com/Gift-Cards/eGift-Card/"},
+ "Gwen":{v:"verified",g:"https://order.toasttab.com/egiftcards/gwen-to-go"},
+ "chi SPACCA":{v:"verified",g:"https://www.toasttab.com/mozza2go/giftcards"},
+ "Majordōmo":{v:"unknown",g:"https://momofuku.myguestaccount.com/guest/egift"},
+ "République":{v:"unknown",g:""},
+ "Gjelina":{v:"verified",g:"https://www.toasttab.com/gjelina-1429-abbot-kinney-blvd/giftcards"},
+ "Ronan":{v:"verified",g:"https://www.toasttab.com/ronan-la/giftcards"},
+ "Super Peach":{v:"unknown",g:"https://momofuku.myguestaccount.com/guest/egift"},
+ "Harriet's Rooftop":{v:"unknown",g:""},
+ "La Dolce Vita":{v:"unknown",g:""},
+ "Loreto":{v:"verified",g:"https://order.toasttab.com/egiftcards/la-cha-cha-cha-frogtown-1991-blake-ave"},
+ "Amiga Amore":{v:"verified",g:"https://www.toasttab.com/amiga-amore-la-5668-york-boulevard/giftcards"},
+ "Pasjoli":{v:"verified",g:"https://www.toasttab.com/pasjoli/giftcards"},
+ "Dunsmoor":{v:"verified",g:"https://www.toasttab.com/dunsmoor-3501-eagle-rock-boulevard/giftcards"},
+ "Camélia":{v:"verified",g:"https://www.toasttab.com/camelia/giftcards"},
+ "Meteora":{v:"verified",g:"https://www.toasttab.com/meteora-6703-melrose-avenue/giftcards"},
+ "Anajak Thai Cuisine":{v:"denied",g:"https://squareup.com/gift/ML1AKYJZ93M2E/order"},
+ "Petit Trois Le Valley":{v:"denied",g:"https://www.toasttab.com/petit-trois-hollywood-2023/giftcards"},
+ "Xuntos":{v:"unknown",g:""},
+ "Vespertine":{v:"unknown",g:""},
+ "Mélisse":{v:"denied",g:"https://order.toasttab.com/egiftcards/melissexcitrin"},
+ "Somni":{v:"unknown",g:""},
+ "Angler":{v:"verified",g:"https://www.toasttab.com/angler-sf-132-the-embarcadero/giftcards"},
+ "Aziza":{v:"unknown",g:""},
+ "Bodega SF":{v:"verified",g:"https://www.toasttab.com/bodega-sf/giftcards"},
+ "Californios":{v:"unknown",g:"https://californios.shop.securetree.com/egift-card"},
+ "Che Fico":{v:"denied",g:"https://www.toasttab.com/chefico/giftcards"},
+ "Gary Danko":{v:"verified",g:"https://www.toasttab.com/garydankosf/giftcards"},
+ "Hilda and Jesse":{v:"unknown",g:"https://www.toasttab.com/hilda-and-jesse-701-union-street/giftcards"},
+ "Little Shucker":{v:"unknown",g:"https://order.littleshucker.com/gift-cards"},
+ "Niku Steakhouse":{v:"verified",g:"https://www.toasttab.com/niku-steakhouse/giftcards"},
+ "Nisei":{v:"verified",g:"https://order.toasttab.com/egiftcards/restaurant-nisei-2316-polk-st"},
+ "O' by Claude Le Tohic":{v:"unknown",g:"https://one65.securetree.com/egift-card"},
+ "Rich Table":{v:"verified",g:"https://www.toasttab.com/rich-table/giftcards"},
+ "Saison":{v:"verified",g:"https://www.toasttab.com/saison-178-townsend-st/giftcards"},
+ "Saison Cellar & Wine Bar":{v:"verified",g:"https://www.toasttab.com/saison-cellar-wine-bar-sf-234-townsend-st/giftcards"},
+ "The Progress":{v:"verified",g:"https://www.toasttab.com/the-progress/giftcards"},
+ "Herb & Wood":{v:"unknown",g:"https://herbandwood.securetree.com/egift-card"},
+ "Ironside Fish & Oyster":{v:"verified",g:"https://www.toasttab.com/ironside/giftcards"},
+ "Kettner Exchange":{v:"verified",g:"https://www.toasttab.com/sdcm-kettner-exchange-vpgdx/giftcards"},
+ "Juniper & Ivy":{v:"verified",g:"https://juniperandivy.cardfoundry.com/giftcards/card_details"},
+ "Animae":{v:"verified",g:"https://animae.securetree.com/egift-card"},
+ "Coasterra":{v:"unknown",g:"https://dinecrg.myguestaccount.com/en-us/guest/egift?page=cardInfo"},
+ "Island Prime":{v:"unknown",g:"https://dinecrg.myguestaccount.com/en-us/guest/egift?page=cardInfo"},
+ "C-Level":{v:"unknown",g:"https://dinecrg.myguestaccount.com/en-us/guest/egift?page=cardInfo"},
+ "Solare Ristorante Lounge":{v:"verified",g:"https://www.toasttab.com/solare/giftcards"},
+ "Marisi":{v:"verified",g:"https://www.toasttab.com/marisi-italiano-1044-wall-st/giftcards"},
+ "Paradisaea":{v:"verified",g:"https://www.toasttab.com/dodobirddonuts/giftcards"},
+ "The Whaling Bar":{v:"verified",g:"https://order.toasttab.com/egiftcards/the-whaling-bar"},
+ "The Marine Room":{v:"unknown",g:"https://wwws-usa1.givex.com/cws/la_jolla/consumer/ecert/select_cards.py"},
+ "KINDRED":{v:"unknown",g:"https://barkindred.com/products/kindred-gift-card-1"},
+ "Casa Gabriela":{v:"unknown",g:"https://dinecrg.myguestaccount.com/en-us/guest/egift?page=cardInfo"},
+ "Jeune et Jolie":{v:"verified",g:"https://www.toasttab.com/jeune-et-jolie/giftcards"},
+ "Lilo":{v:"unknown",g:"https://order.toasttab.com/egiftcards/lilo-2598-state-street"},
+ "Herb & Sea":{v:"unknown",g:"https://herbandsea.securetree.com/egift-card"},
+ "Vintana Wine + Dine":{v:"unknown",g:"https://dinecrg.myguestaccount.com/en-us/guest/egift?page=cardInfo"}
+};
+
 const dirLink=a=>"https://www.google.com/maps/dir/Irvine,+CA/"+encodeURIComponent(a);
 const gUrl=r=>"https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(r.name+" "+r.addr);
 const priceNum=r=>{const m=(r.items[0][1].match(/\d+/));return m?+m[0]:0;};
@@ -761,6 +835,58 @@ const priceNum=r=>{const m=(r.items[0][1].match(/\d+/));return m?+m[0]:0;};
 const dishPic=(r,it)=> (it[2]&&it[2].includes('/menu/'))
   ? it[2]
   : "https://www.google.com/search?tbm=isch&q="+encodeURIComponent(r.name+" "+it[0]);
+
+// ---- dynamic Open/Closed in Pacific time (parses the hours string) ----
+const DAYI={sun:0,mon:1,tue:2,wed:3,thu:4,fri:5,sat:6};
+function pacNow(){
+  const f=new Intl.DateTimeFormat('en-US',{timeZone:'America/Los_Angeles',weekday:'short',hour:'2-digit',minute:'2-digit',hour12:false});
+  const p={}; f.formatToParts(new Date()).forEach(x=>p[x.type]=x.value);
+  return {day:DAYI[(p.weekday||'').toLowerCase()], min:((+p.hour)%24)*60+(+p.minute)};
+}
+function parseT(tok,fb){
+  tok=tok.trim().toLowerCase();
+  if(/close|late|midnight/.test(tok))return 1439;
+  const m=tok.match(/(\d{1,2})(?::(\d{2}))?\s*(am|pm)?/); if(!m)return null;
+  let h=+m[1], mm=m[2]?+m[2]:0, mer=m[3]||fb;
+  if(mer==='pm'&&h!==12)h+=12; if(mer==='am'&&h===12)h=0;
+  return h*60+mm;
+}
+function parseHours(str){
+  if(!str||/temporarily closed|hours vary|varies/i.test(str))return null;
+  const sched=[[],[],[],[],[],[],[]]; let any=false;
+  str.split('·').forEach(seg=>{
+    seg=seg.replace(/\([^)]*\)/g,' ').replace(/\b(lunch|dinner|brunch|seatings?|happy hour|bar)\b/gi,' ');
+    if(/closed|no dinner/i.test(seg))return;
+    const di=seg.search(/\d/); if(di<0)return;
+    let dayspec=seg.slice(0,di).toLowerCase(), times=seg.slice(di), days=[];
+    if(/daily|every\s*day|mon\s*[–-]\s*sun/.test(dayspec)){for(let i=0;i<7;i++)days.push(i);}
+    else dayspec.split(/[&,]/).forEach(part=>{
+      part=part.trim(); if(!part)return;
+      const r=part.match(/([a-z]{3})\s*[–-]\s*([a-z]{3})/);
+      if(r&&DAYI[r[1]]!=null&&DAYI[r[2]]!=null){for(let i=DAYI[r[1]];;i=(i+1)%7){days.push(i); if(i===DAYI[r[2]])break;}}
+      else{const d=part.match(/[a-z]{3}/); if(d&&DAYI[d[0]]!=null)days.push(DAYI[d[0]]);}
+    });
+    if(!days.length)return;
+    times.split('&').forEach(rg=>{
+      const mm=rg.match(/(\d{1,2}(?::\d{2})?\s*(?:am|pm)?)\s*[–-]\s*(\d{1,2}(?::\d{2})?\s*(?:am|pm)?|close|late|midnight)/i);
+      if(!mm)return;
+      const endMer=(mm[2].match(/am|pm/i)||['pm'])[0].toLowerCase();
+      let o=parseT(mm[1],endMer), c=parseT(mm[2],'pm');
+      if(o==null||c==null)return; if(c<=o)c+=1440;
+      days.forEach(d=>sched[d].push([o,c])); any=true;
+    });
+  });
+  return any?sched:null;
+}
+function openStatus(str){
+  if(/temporarily closed/i.test(str||''))return {s:'closed',t:'Temporarily closed'};
+  const sched=parseHours(str); if(!sched)return {s:'unknown',t:''};
+  const {day,min}=pacNow(); if(day==null)return {s:'unknown',t:''};
+  for(const [o,c] of sched[day]) if(min>=o&&min<Math.min(c,1440))return {s:'open',t:'Open now'};
+  for(const [o,c] of sched[(day+6)%7]) if(c>1440&&min<c-1440)return {s:'open',t:'Open now'};
+  return {s:'closed',t:'Closed now'};
+}
+const CSRLBL={verified:['ok','✓ Verified'],denied:['no','✗ Denied'],unknown:['unk','? Unverified']};
 
 let state={filter:"all",sort:"vibe"};
 
@@ -797,11 +923,15 @@ function cardHTML(r){
   const pros=r.pros.map(p=>`<li>${p}</li>`).join('');
   const cons=r.cons.map(c=>`<li>${c}</li>`).join('');
   const thumb=r.img?`<img src="${r.img}" alt="${r.name}" loading="lazy" onerror="this.style.display='none'">`:'';
+  const st=openStatus(r.hours);
+  const statusBadge=st.s==='unknown'?'':`<span class="status ${st.s}">● ${st.t}</span>`;
+  const csrBadge=r.csrv?`<span class="csr ${CSRLBL[r.csrv][0]}" title="Sapphire $300 dining-credit status — community-sourced (csr-dining.edgerunners.cloud)">${CSRLBL[r.csrv][1]}</span>`:'';
+  const giftLink=r.gift?`<a class="gift" href="${r.gift}" target="_blank" rel="noopener" title="Gift-card link — a known way to trigger the dining credit">🎁 ${/toasttab/.test(r.gift)?'Toast gift card':'Gift card'}</a>`:'';
   return `<div class="rcard" id="card-${r.rank}" data-rank="${r.rank}">
     <div class="rhead">
       <div class="thumb"><div class="fb">${r.name}</div>${thumb}<span class="num">${r.rank}</span></div>
       <div class="rmain">
-        <div class="rname">${r.name}${r.pick?'<span class="vibebadge">★ YOUR VIBE</span>':''}</div>
+        <div class="rname">${r.name}${r.pick?'<span class="vibebadge">★ YOUR VIBE</span>':''}${statusBadge}${csrBadge}</div>
         <div class="rcuis"><span class="cat">${r.cat}</span>${r.cuisine} · ${r.area}</div>
         <div class="ratings">
           <a class="rat" href="${gUrl(r)}" target="_blank" rel="noopener"><span class="g">Google ★ ${r.google}</span>${r.googleN?` (${r.googleN})`:''} <span class="ext">↗</span></a>
@@ -823,6 +953,7 @@ function cardHTML(r){
         <a href="${r.web}" target="_blank" rel="noopener">Website</a>
         <a href="${r.menu}" target="_blank" rel="noopener">Menu</a>
         <a href="${r.yelpUrl}" target="_blank" rel="noopener">Yelp</a>
+        ${giftLink}
         <a class="dir" href="${dirLink(r.addr)}" target="_blank" rel="noopener">Directions</a>
       </div>
     </div>
@@ -845,7 +976,7 @@ const homeMarker=L.marker([IRVINE.lat,IRVINE.lng],{icon:L.divIcon({className:'',
 const markerLayer=L.layerGroup().addTo(map);
 const markers={};
 
-function render(){
+function render(skipFit){
   const list=R.filter(passes).sort(sorter);
   listEl.innerHTML=list.map(cardHTML).join('');
   countEl.textContent=`Showing ${list.length} of ${R.length} · ${CITY.label}`;
@@ -861,7 +992,7 @@ function render(){
   });
   if(CITY.socal){homeMarker.addTo(map); pts.push([IRVINE.lat,IRVINE.lng]);}
   else if(map.hasLayer(homeMarker)){map.removeLayer(homeMarker);}
-  if(pts.length)map.fitBounds(pts,{padding:[40,40]});
+  if(!skipFit && pts.length)map.fitBounds(pts,{padding:[40,40]});
   bindCards();
 }
 function flash(rank){
@@ -893,13 +1024,14 @@ document.addEventListener('click',e=>{
 
 function setCity(key){
   CITY=CITIES[key]; R=CITY.data; R.forEach((r,i)=>r.rank=i+1);
-  R.forEach(r=>{const e=EXTRA[r.name]; if(e){ if(e.hours)r.hours=e.hours; if(e.img&&!r.img)r.img=e.img; }});
+  R.forEach(r=>{const e=EXTRA[r.name]; if(e){ if(e.hours)r.hours=e.hours; if(e.img&&!r.img)r.img=e.img; } const cs=CSR[r.name]; if(cs){ r.csrv=cs.v; r.gift=cs.g; } });
   state.filter="all";
   buildFilters();
   render();
 }
 document.getElementById('citysel').addEventListener('change',e=>setCity(e.target.value));
 setCity('la');
+setInterval(()=>render(true),60000); // refresh Open/Closed each minute without moving the map
 </script>
 </body>
 </html>
