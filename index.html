@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Sapphire Reserve · LA Exclusive Tables — RestaurantMaxxer</title>
+<title>Sapphire Reserve Exclusive Tables — RestaurantMaxxer (LA · SD · Carlsbad · SF)</title>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 <style>
   :root{
@@ -41,6 +41,8 @@
   .chip:hover{border-color:var(--red)}
   .chip.active{background:var(--red);color:#fff;border-color:var(--red)}
   .chip.vibe.active{background:var(--gold);border-color:var(--gold)}
+  .citysel{font-size:13.5px;font-weight:800;border:1.5px solid var(--red);background:#fff;color:var(--red2);
+       padding:7px 13px;border-radius:999px;cursor:pointer;outline:none}
 
   .app{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(0,1fr);gap:20px;align-items:start;margin-top:16px}
   .app.gridview{grid-template-columns:1fr}
@@ -120,14 +122,14 @@
 <div class="wrap">
 
   <header class="hero">
-    <span class="badge">CHASE SAPPHIRE RESERVE · EXCLUSIVE TABLES · LOS ANGELES</span>
-    <h1>RestaurantMaxxer <span class="light">— all 24 LA tables, mapped from Irvine</span></h1>
-    <p>The complete Sapphire Reserve list, quality-checked. Filter, sort, and tap pins on the live map. Your 6 <b>★ vibe</b> picks (lively &amp; trendy) are gold; every Google/Yelp rating links to its real reviews page, and each dish links to its Yelp photos.</p>
+    <span class="badge">CHASE SAPPHIRE RESERVE · EXCLUSIVE TABLES · CALIFORNIA</span>
+    <h1>RestaurantMaxxer <span class="light">— Sapphire Reserve Exclusive Tables</span></h1>
+    <p>Every Exclusive Tables restaurant across <b>4 California cities</b>, quality-checked. Use the <b>City</b> dropdown to switch the list &amp; map. Filter, sort, and tap pins on the live map; every Google/Yelp rating opens its real reviews page and each dish links to photos of that dish. In LA, 6 gold <b>★</b> picks match a lively/trendy vibe.</p>
     <div class="stat">
-      <div><b>24</b><span>RESTAURANTS</span></div>
-      <div><b>6</b><span>MATCH YOUR VIBE</span></div>
+      <div><b>4</b><span>CITIES</span></div>
+      <div><b>59</b><span>TABLES TOTAL</span></div>
       <div><b>$150</b><span>CREDIT (H1 2026)</span></div>
-      <div><b>~40–65 mi</b><span>FROM IRVINE</span></div>
+      <div><b>LA·SD·Carlsbad</b><span>DRIVE · SF = FLY</span></div>
     </div>
   </header>
 
@@ -136,6 +138,15 @@
   </div>
 
   <div class="bar">
+    <div class="row" style="margin-bottom:8px">
+      <span class="lbl">City</span>
+      <select id="citysel" class="citysel">
+        <option value="la">📍 Los Angeles — 24 tables</option>
+        <option value="sd">📍 San Diego — 15 tables</option>
+        <option value="carlsbad">📍 Carlsbad / North County — 4 tables</option>
+        <option value="sf">📍 San Francisco — 16 tables</option>
+      </select>
+    </div>
     <div class="row" style="margin-bottom:8px">
       <span class="lbl">Filter</span>
       <span id="filters"></span>
@@ -169,6 +180,12 @@
   <div class="qc">
     <h3>✅ Quality-check notes (corrections the research surfaced)</h3>
     <ul>
+      <li><b>SF · San Diego · Carlsbad (new):</b> <b>Che Fico</b> (SF) is flagged <b>temporarily closed</b> (merging with Che Fico Alimentari) — verify before booking.</li>
+      <li><b>Address fixes:</b> <b>Little Shucker</b> → 2016 Fillmore St (not Union St); <b>Saison Cellar &amp; Wine Bar</b> → 234 Townsend St; <b>The Marine Room</b> → 1950 Spindrift Dr; <b>Coasterra</b> → 880 <b>B</b> Harbor Island Dr.</li>
+      <li><b>O' by Claude Le Tohic</b> = <b>1</b> Michelin star (not 2); <b>Gary Danko</b> lost its star in 2024; <b>Juniper &amp; Ivy</b>'s founder Richard Blais is no longer the day-to-day chef (now Alex Penkin).</li>
+      <li><b>San Francisco distances are flight-based</b> (~1h20 fly / ~6h drive), so the green Irvine home pin only appears on the SoCal maps.</li>
+      <li>Some <b>Yelp stars</b> in SF/SD couldn't be exactly scraped (review counts are real; the link opens the live page). Several <b>tasting-menu prices</b> (Nisei, Saison, Californios, Lilo, O') are last-published and may have risen; market-price items show as <b>mkt</b>.</li>
+      <li style="margin-top:8px"><b>— Los Angeles —</b></li>
       <li><b>Steak 48</b> — verified address is <b>9680 Wilshire Blvd</b>, Beverly Hills (not Santa Monica Blvd).</li>
       <li><b>Gjelina</b> — the pizza is officially the <b>“Mixed Mushroom”</b> ($27); menu adds a 20% service fee.</li>
       <li><b>Camélia</b> — the signature toast is widely reviewed as <b>uni &amp; otoro (bluefin)</b> toast (~$30), ~3 small pieces.</li>
@@ -177,7 +194,7 @@
       <li><b>Meteora</b> — tasting pricing has climbed over time (older sources ~$95); $115/$165 reflects recent menus.</li>
       <li><b>Loreto</b> / <b>Super Peach</b> / <b>Xuntos</b> — earlier guesses corrected: Loreto = Baja mariscos (Grupo Almares), Super Peach = David Chang/Momofuku, Xuntos = Galician-Spanish tapas. No Mexican-Japanese spot exists in the program.</li>
       <li><b>Somni</b> now holds <b>3 Michelin stars</b> (June 2025) at $645pp — LA’s priciest tasting menu.</li>
-      <li>Dish links open each restaurant’s <b>Yelp food-photos</b> page (Yelp blocks direct image hotlinking, so a few card thumbnails fall back to a name tile).</li>
+      <li>Each dish links to an image search for that specific dish; most cards outside LA show a clean name tile since Yelp/Google block direct photo hotlinking.</li>
     </ul>
   </div>
 
@@ -195,7 +212,7 @@
 const IRVINE={name:"Irvine, CA",lat:33.6846,lng:-117.8265};
 const Y=s=>`https://www.yelp.com/biz_photos/${s}?tab=food`;
 
-const R=[
+const LA=[
  {pick:1,name:"The Nice Guy",cuisine:"Italian-American",cat:"Italian",area:"West Hollywood",addr:"401 N La Cienega Blvd, Los Angeles, CA 90048",lat:34.0769,lng:-118.3760,distMi:48,dist:"~48 mi · 50–65 min",
   google:"4.0",googleN:"",yelp:"~3.8*",yelpN:"859",yelpUrl:"https://www.yelp.com/biz/the-nice-guy-los-angeles-3",
   web:"https://www.theniceguyla.com/",menu:"https://www.theniceguyla.com/menu/dinner/",
@@ -412,7 +429,264 @@ const R=[
   pros:["Uniformly beautiful presentations, exceptional even for 3-star","Inventive modernist Spanish dishes","Technique-driven yet restrained, not showy"],
   cons:["LA's most expensive tasting ($645/pp)","Value complaints; some felt closer to 1 star","Flavors sometimes too restrained / salty"]}
 ];
-R.forEach((r,i)=>r.rank=i+1);
+const SF=[
+ {pick:0,name:"Angler",cuisine:"Seafood / live-fire (Michelin)",cat:"Seafood",area:"Embarcadero",addr:"132 The Embarcadero, San Francisco, CA 94105",lat:37.793086,lng:-122.392181,distMi:410,dist:"~1 hr 25 flight / ~6 hr drive",
+  google:"4.5",googleN:"~1,100",yelp:"~3.5*",yelpN:"774",yelpUrl:"https://www.yelp.com/biz/angler-san-francisco",web:"https://anglerrestaurants.com/",menu:"https://anglerrestaurants.com/menu/dinner/",img:"",
+  desc:"Michelin-starred, seafood-focused spot from the Saison team where nearly every dish hits a wood-burning hearth, paired with Bay Bridge views.",
+  items:[["Embered Whole Lobster Thermidor","$100"],["Angler Potato w/ Taleggio","$22"],["Ossetra Caviar","$140/oz"]],
+  pros:["Outstanding live-fire seafood","Stunning waterfront Bay Bridge views","Excellent award-winning wine list"],
+  cons:["Very expensive, bill adds up fast","Service can be inconsistent for the tier","Portions / value questioned by some"]},
+
+ {pick:0,name:"Aziza",cuisine:"Cal-Moroccan (Michelin)",cat:"American",area:"Outer Richmond",addr:"5800 Geary Blvd, San Francisco, CA 94121",lat:37.7804334,lng:-122.481706,distMi:415,dist:"~1 hr 25 flight / ~6 hr drive",
+  google:"4.6",googleN:"~855",yelp:"~4.0*",yelpN:"2,395",yelpUrl:"https://www.yelp.com/biz/aziza-san-francisco",web:"https://www.azizasf.com/",menu:"https://www.azizasf.com/dinner",img:"",
+  desc:"Chef Mourad Lahlou's Michelin-starred Richmond District restaurant — rustic-modern Moroccan built on California seasonality; first US Moroccan spot to earn a star.",
+  items:[["Basteeya (chicken confit)","$36"],["Braised Lamb Shank","$55"],["Cornbread w/ harissa butter","mkt"]],
+  pros:["Warm, dark, sophisticated decor","Creative, flavorful shareable Moroccan dishes","Special-occasion vibe"],
+  cons:["Service can be inconsistent","Gets very busy; reserve ahead","Pricey, $100+ pp"]},
+
+ {pick:0,name:"Bodega SF",cuisine:"Northern Vietnamese",cat:"Asian",area:"Union Square",addr:"138 Mason St, San Francisco, CA 94102",lat:37.7848759,lng:-122.4092194,distMi:410,dist:"~1 hr 25 flight / ~6 hr drive",
+  google:"4.5",googleN:"~700",yelp:"4.5",yelpN:"963",yelpUrl:"https://www.yelp.com/biz/bodega-san-francisco-3",web:"https://www.bodegarestaurants.com/",menu:"https://www.bodegarestaurants.com/menu",img:"",
+  desc:"Modern family-style Northern Vietnamese near Union Square — northern-style pho and bun cha plus shaking beef and garlic noodles, with an underground speakeasy (Felix).",
+  items:[["Shaking Beef","$22"],["Garlic Noodles","$16"],["Chef's Tasting Menu","$90"]],
+  pros:["Flavorful, fresh, authentic Vietnamese","Attentive service","Great for groups, shareable"],
+  cons:["Pricey for the portions","Service can be slow at peak","Cramped layout"]},
+
+ {pick:0,name:"Californios",cuisine:"Mexican tasting menu (2★)",cat:"Tasting",area:"SoMa / Mission",addr:"355 11th St, San Francisco, CA 94103",lat:37.7711,lng:-122.4131,distMi:430,dist:"~1 hr 25 flight / ~6 hr drive",
+  google:"4.6",googleN:"",yelp:"4.4",yelpN:"485",yelpUrl:"https://www.yelp.com/biz/californios-san-francisco",web:"https://www.californiossf.com/",menu:"https://www.exploretock.com/californiossf",img:"",
+  desc:"The only two-Michelin-star Mexican restaurant in the US — chef Val M. Cantu's luxe multi-course tasting reimagining Mexican cuisine with California ingredients.",
+  items:[["Tasting menu (~16 courses, pp)","$325"],["Wine pairing","$197"]],
+  pros:["Creative, visually stunning food; standout taco course","Dramatic dining room, choreographed staff","Excellent drink + non-alc pairings"],
+  cons:["Service can feel rushed","Few truly memorable standouts for the price","Repetitive corn / beans / tortilla across courses"]},
+
+ {pick:0,name:"Che Fico",cuisine:"California-Italian",cat:"Italian",area:"NoPa",addr:"838 Divisadero St, San Francisco, CA 94117",lat:37.7766,lng:-122.4382,distMi:430,dist:"~1 hr 25 flight / ~6 hr drive",
+  google:"4.4",googleN:"",yelp:"4.0",yelpN:"975",yelpUrl:"https://www.yelp.com/biz/che-fico-san-francisco-3",web:"https://www.chefico.com/",menu:"https://www.chefico.com/menus",img:"",
+  desc:"⚠ Temporarily closed (verify) — California-Italian taverna in NoPa from David Nayfeld & Matt Brewer: handmade pasta, wood-fired pizza, housemade salumi, Roman-Jewish dishes.",
+  items:[["Bone-In Ribeye","$165"],["Margherita Pizza (personal)","$30"],["Handmade Pasta","mkt"]],
+  pros:["Phenomenal pizza & pasta","Stunning, stylish space, lively","Attentive service; special-occasion"],
+  cons:["⚠ Listed temporarily closed (merging locations) — verify","Expensive for portions ($30 personal pizza)","Noise level near-intolerable"]},
+
+ {pick:0,name:"Gary Danko",cuisine:"French-American fine dining",cat:"French",area:"Fisherman's Wharf",addr:"800 North Point St, San Francisco, CA 94109",lat:37.8055,lng:-122.4205,distMi:430,dist:"~1 hr 25 flight / ~6 hr drive",
+  google:"4.7",googleN:"",yelp:"4.5",yelpN:"6,126",yelpUrl:"https://www.yelp.com/biz/gary-danko-san-francisco",web:"https://garydanko.com/",menu:"https://garydanko.com/menus/",img:"",
+  desc:"An SF fine-dining institution since 1999 — customizable 3–5 course French-American prix fixe with a famed tableside cheese cart and award-winning wine list.",
+  items:[["3-course prix fixe (pp)","$125"],["4-course (pp)","$153"],["5-course (pp)","$173"]],
+  pros:["Among the best service in SF","Flexible build-your-own 3–5 courses","Tableside cheese cart, classic sauces, great wine"],
+  cons:["'Old school' rather than trendy","Menu evolves only modestly","Expensive; lost its Michelin star in 2024"]},
+
+ {pick:0,name:"Hilda and Jesse",cuisine:"American brunch (Michelin)",cat:"American",area:"North Beach",addr:"701 Union St, San Francisco, CA 94133",lat:37.8008,lng:-122.4093,distMi:380,dist:"~1 hr 30 flight / ~6 hr drive",
+  google:"4.3",googleN:"210",yelp:"4.0",yelpN:"212",yelpUrl:"https://www.yelp.com/biz/hilda-and-jesse-san-francisco",web:"https://www.hildaandjessesf.com",menu:"https://www.hildaandjessesf.com/menu",img:"",
+  desc:"Queer-owned, Michelin-starred North Beach spot with an innovative take on American brunch and dinner; $98 five-course Chef's Adventure plus a la carte.",
+  items:[["Kaluga Caviar","$52"],["Root Down Farm Chicken","$36"],["Pancakes Without Boundaries","$24"]],
+  pros:["1 Michelin star + Outstanding Service award","Creative, ambitious menu, quality ingredients","Tasting and a la carte at brunch"],
+  cons:["Pricey for brunch ($98 tasting)","Limited dinner hours (Mon/Thu/Fri)","Polarizing reviews"]},
+
+ {pick:0,name:"Little Shucker",cuisine:"Oyster & wine bar",cat:"Seafood",area:"Lower Pacific Heights",addr:"2016 Fillmore St, San Francisco, CA 94115",lat:37.7888,lng:-122.4337,distMi:380,dist:"~1 hr 30 flight / ~6 hr drive",
+  google:"4.5",googleN:"330",yelp:"4.0",yelpN:"375",yelpUrl:"https://www.yelp.com/biz/little-shucker-san-francisco",web:"https://www.littleshucker.com",menu:"https://www.littleshucker.com/menu",img:"",
+  desc:"Oyster & wine bar from the Snug team — fresh oysters, seafood towers, and a cult cold lobster roll; named to NYT's 25 Best SF Restaurants.",
+  items:[["The Big Shucker Seafood Tower","mkt"],["Cold Lobster Roll","mkt"],["Miso Bone Marrow Oysters","mkt"]],
+  pros:["NYT 25 Best SF (2023, 2024)","Acclaimed lobster roll & oyster towers","$2 oyster happy hour Mon–Thu"],
+  cons:["Small space, gets crowded","Counter-service hours differ from dinner","Seafood-tower pricing runs high"]},
+
+ {pick:0,name:"Niku Steakhouse",cuisine:"Japanese wagyu steakhouse (Michelin)",cat:"Steak",area:"Design District",addr:"61 Division St, San Francisco, CA 94103",lat:37.7699,lng:-122.4055,distMi:380,dist:"~1 hr 30 flight / ~6 hr drive",
+  google:"4.6",googleN:"900",yelp:"4.5",yelpN:"997",yelpUrl:"https://www.yelp.com/biz/niku-steakhouse-san-francisco",web:"https://www.nikusteakhouse.com",menu:"https://www.nikusteakhouse.com/dailymenu",img:"",
+  desc:"One-Michelin-star luxe steakhouse focused on Japanese A5 wagyu, wood-fire & binchotan grilling, with an 18-seat chef's counter and in-house dry-aging.",
+  items:[["Wagyu Tasting (pp)","$275"],["A5 Bushu Wagyu","$160"],["Wagyu Bone-In Short Rib","$125"]],
+  pros:["1 Michelin star (2025)","Exclusive A5 wagyu + in-house dry-aging","Theatrical chef's-counter grilling"],
+  cons:["Very expensive ($275–375 pp)","6% employee-benefits surcharge","Evening-only hours"]},
+
+ {pick:0,name:"Nisei",cuisine:"Japanese tasting menu (Michelin)",cat:"Tasting",area:"Russian Hill",addr:"2316 Polk St, San Francisco, CA 94109",lat:37.7988,lng:-122.4221,distMi:410,dist:"~1 hr 30 flight / ~6 hr drive",
+  google:"4.6",googleN:"180",yelp:"4.5",yelpN:"183",yelpUrl:"https://www.yelp.com/biz/nisei-san-francisco-3",web:"https://www.restaurantnisei.com/",menu:"https://www.restaurantnisei.com/menu",img:"",
+  desc:"Michelin-starred Japanese-American fine dining from chef David Yoshimura — refined technique with California seasonal ingredients at an intimate counter.",
+  items:[["Tasting menu (pp)","$223"],["Sake / Beverage pairing","$185"],["Supplements (caviar)","mkt"]],
+  pros:["Michelin star + Young Chef & James Beard recognition","Thoughtful Japanese-American, CA sourcing","Intimate, personal counter service"],
+  cons:["Expensive prepaid tasting format","Tax + service on top","Hard to book; limited seats"]},
+
+ {pick:0,name:"O' by Claude Le Tohic",cuisine:"French tasting menu (Michelin)",cat:"French",area:"Union Square",addr:"165 O'Farrell St, 5th Fl, San Francisco, CA 94102",lat:37.7861,lng:-122.4079,distMi:410,dist:"~1 hr 30 flight / ~6 hr drive",
+  google:"4.6",googleN:"73",yelp:"4.5",yelpN:"240",yelpUrl:"https://www.yelp.com/biz/o-by-claude-le-tohic-san-francisco-3",web:"https://one65sf.com/concept/o/",menu:"https://one65sf.com/concept/o/",img:"",
+  desc:"Michelin-starred French fine dining from MOF chef Claude Le Tohic atop ONE65 — elegant modern French tasting menus; his first solo venture after Joël Robuchon Las Vegas.",
+  items:[["5-course Tasting (pp)","$210"],["9-course Grand Tasting (pp)","$295"],["Wine pairing","mkt"]],
+  pros:["Acclaimed MOF & James Beard chef","Two tasting lengths for flexibility","Refined service, upscale top-floor setting"],
+  cons:["20% service + 3% SF health mandate","Very high price point","Formal pacing not for everyone"]},
+
+ {pick:0,name:"Rich Table",cuisine:"Contemporary American (Michelin)",cat:"American",area:"Hayes Valley",addr:"199 Gough St, San Francisco, CA 94102",lat:37.7740,lng:-122.4234,distMi:410,dist:"~1 hr 30 flight / ~6 hr drive",
+  google:"4.7",googleN:"~1,200",yelp:"4.5",yelpN:"1,741",yelpUrl:"https://www.yelp.com/biz/rich-table-san-francisco",web:"https://www.richtablesf.com/",menu:"https://www.richtablesf.com/",img:"",
+  desc:"Evan & Sarah Rich's beloved Hayes Valley spot — casual-refined contemporary California-American since 2012, known for inventive snacks and seasonal plates.",
+  items:[["Chef's Picks menu (pp)","$125"],["Dried Porcini Doughnuts (5)","$9"],["Sardine Chips (each)","$2"]],
+  pros:["Long Michelin recognition; SF Chronicle Top 100 #3 (2025)","Iconic sardine chips & porcini doughnuts","Relaxed, dressed-down fine dining"],
+  cons:["One of the hardest reservations in town","Snack-heavy ordering adds up","Hayes Valley parking is tough"]},
+
+ {pick:0,name:"Saison",cuisine:"Contemporary tasting (2★)",cat:"Tasting",area:"SoMa",addr:"178 Townsend St, San Francisco, CA 94107",lat:37.7795354,lng:-122.392263,distMi:405,dist:"~1 hr 25 flight / ~6 hr drive",
+  google:"4.6",googleN:"~1,100",yelp:"4.0",yelpN:"731",yelpUrl:"https://www.yelp.com/biz/saison-san-francisco-2",web:"https://saisonsf.com/",menu:"https://saisonsf.com/",img:"",
+  desc:"Two-Michelin-star open wood-fire restaurant — a California-terroir tasting menu; a cheaper 5-course bar menu runs Tue–Thu.",
+  items:[["Tasting menu (pp)","$328"],["Bar menu, 5 courses","$78"],["Wine pairing","mkt"]],
+  pros:["Two Michelin stars; world-class wood-fire","Wine Spectator Grand Award since 2014","$78 bar menu is rare fine-dining value"],
+  cons:["$328 tasting is very expensive","Dinner only, Tue–Sat, 5pm start","Hard to book; formal"]},
+
+ {pick:0,name:"Saison Cellar & Wine Bar",cuisine:"Wine bar / small plates",cat:"American",area:"SoMa",addr:"234 Townsend St, San Francisco, CA 94107",lat:37.7799,lng:-122.3935,distMi:405,dist:"~1 hr 25 flight / ~6 hr drive",
+  google:"4.5",googleN:"~150",yelp:"4.0",yelpN:"89",yelpUrl:"https://www.yelp.com/biz/saison-cellar-and-wine-bar-san-francisco",web:"https://saisonwinebar.com/sanfrancisco/",menu:"https://saisonwinebar.com/sanfrancisco/menu/",img:"",
+  desc:"Casual wine-bar spinoff from the Saison team — caviar, charcuterie, croque monsieurs and a Wine Spectator-awarded list; affordable luxury near the flagship.",
+  items:[["Pâté en Croûte","$21"],["Jamón Ibérico de Bellota","$25/oz"],["Croque Monsieur","mkt"]],
+  pros:["Saison-quality food at a fraction of the price","Walk-in friendly, no tasting commitment","Deep, award-winning wine by glass / flight"],
+  cons:["Small plates; costs add up","Limited hours, closed Sun","Not the full flagship experience"]},
+
+ {pick:0,name:"State Bird Provisions",cuisine:"Contemporary American (Michelin)",cat:"American",area:"Fillmore",addr:"1529 Fillmore St, San Francisco, CA 94115",lat:37.7838,lng:-122.4324,distMi:405,dist:"~1 hr 25 flight / ~6 hr drive",
+  google:"4.5",googleN:"~2,500",yelp:"4.5",yelpN:"3,557",yelpUrl:"https://www.yelp.com/biz/state-bird-provisions-san-francisco",web:"https://www.statebirdsf.com/",menu:"https://www.statebirdsf.com/",img:"",
+  desc:"James Beard-winning, one-Michelin-star spot famous for dim-sum-style carts of inventive American small plates from Stuart Brioza & Nicole Krasinski.",
+  items:[["CA State Bird (fried quail)","$24"],["Sauerkraut-Pecorino Pancake","mkt"],["Steak Tartare Toasts","mkt"]],
+  pros:["Michelin star + James Beard Best New Restaurant","Fun, interactive dim-sum cart format","Strong value for the quality"],
+  cons:["Very hard to get a reservation","Cart format adds up quickly","Cramped, loud room"]},
+
+ {pick:0,name:"The Progress",cuisine:"Contemporary American (Michelin)",cat:"American",area:"Fillmore",addr:"1525 Fillmore St, San Francisco, CA 94115",lat:37.7839,lng:-122.4326,distMi:405,dist:"~1 hr 25 flight / ~6 hr drive",
+  google:"4.6",googleN:"~1,100",yelp:"4.0",yelpN:"1,349",yelpUrl:"https://www.yelp.com/biz/the-progress-san-francisco-2",web:"https://theprogress-sf.com/",menu:"https://theprogress-sf.com/",img:"",
+  desc:"Sister restaurant to State Bird next door — a choose-your-own family-style California menu (pick 6 dishes to share); one Michelin star.",
+  items:[["Family-style, 6 dishes (pp)","$65"],["Porcini Toast","mkt"],["Smoked Duck","mkt"]],
+  pros:["One Michelin star; State Bird team","Family-style $65 good for groups","Full bar + a la carte for walk-ins"],
+  cons:["$65 fixed per-person commitment","Dinner only, 5:30pm start","Less buzzy than neighbor State Bird"]}
+];
+
+const SD=[
+ {pick:0,name:"Herb & Wood",cuisine:"Wood-fired Mediterranean",cat:"American",area:"Little Italy",addr:"2210 Kettner Blvd, San Diego, CA 92101",lat:32.7273,lng:-117.1700,distMi:83,dist:"~83 mi · 1 hr 25 min",
+  google:"4.5",googleN:"2,344",yelp:"4.1",yelpN:"2,269",yelpUrl:"https://www.yelp.com/biz/herb-and-wood-san-diego",web:"https://www.herbandwood.com/",menu:"https://www.herbandwood.com/dinner",img:"",
+  desc:"Chef Brian Malarkey's design-forward Little Italy flagship — rustic wood-fired Mediterranean, housemade pastas, wood-grilled mains, and a see-and-be-seen room.",
+  items:[["Australian Wagyu NY Strip","$83"],["Half Chicken (biryani spice)","$35"],["Mushroom Truffle Pizza","mkt"]],
+  pros:["Beautiful, elegant room & patio","Excellent wood-fired dishes & pastas","Strong cocktails; Tuna Thursday / happy hour"],
+  cons:["Pricey / fine-dining tabs","Can get loud and crowded","Service inconsistency noted"]},
+
+ {pick:0,name:"Ironside Fish & Oyster",cuisine:"Seafood / oyster bar",cat:"Seafood",area:"Little Italy",addr:"1654 India St, San Diego, CA 92101",lat:32.7228,lng:-117.1690,distMi:83,dist:"~83 mi · 1 hr 25 min",
+  google:"4.6",googleN:"3,473",yelp:"4.2",yelpN:"6,142",yelpUrl:"https://www.yelp.com/biz/ironside-fish-and-oyster-san-diego",web:"https://ironsidefishandoyster.com/",menu:"https://order.toasttab.com/online/ironside",img:"",
+  desc:"A nautical-themed Little Italy raw bar & seafood house — rotating oysters, a Josper wood grill, and a famous lobster roll, in an Instagram-worthy room.",
+  items:[["Lobster Roll","$21"],["Clam Chowder","$9"],["Oysters (each)","$3–4"]],
+  pros:["Fresh oysters & quality seafood","Striking, photogenic interior","$1 oyster happy hour Mon–Fri"],
+  cons:["Noisy and busy","Pricey for portion sizes","Long waits at peak"]},
+
+ {pick:0,name:"Kettner Exchange",cuisine:"Modern California",cat:"American",area:"Little Italy",addr:"2001 Kettner Blvd, San Diego, CA 92101",lat:32.7256,lng:-117.1702,distMi:83,dist:"~83 mi · 1 hr 25 min",
+  google:"4.5",googleN:"1,823",yelp:"4.2",yelpN:"2,457",yelpUrl:"https://www.yelp.com/biz/kettner-exchange-san-diego",web:"https://www.kettnerexchange.com/",menu:"https://www.kettnerexchange.com/dinner-menu/",img:"",
+  desc:"A Michelin Bib Gourmand progressive-American spot — shared plates, craft cocktails, and Little Italy's only rooftop patio with harbor views.",
+  items:[["Big Eye Tuna Tacos","$13"],["Suckling Pig Larb","$37"],["Lobster Tempura","mkt"]],
+  pros:["Inventive shared plates & cocktails","Rooftop / indoor-outdoor space","Michelin Bib Gourmand value"],
+  cons:["Small plates add up","Loud, club-like at night","Mixed service consistency"]},
+
+ {pick:0,name:"Juniper & Ivy",cuisine:"Seasonal New American",cat:"American",area:"Little Italy",addr:"2228 Kettner Blvd, San Diego, CA 92101",lat:32.7282,lng:-117.1697,distMi:85,dist:"~85 mi · 1 hr 25 min",
+  google:"4.6",googleN:"2,640",yelp:"4.3",yelpN:"3,610",yelpUrl:"https://www.yelp.com/biz/juniper-and-ivy-san-diego-2",web:"https://www.juniperandivy.com/",menu:"https://www.juniperandivy.com/menu/",img:"https://www.juniperandivy.com/wp-content/uploads/2023/08/PrixFixe_JuniperIvy__KimberlyMotos-67-of-124-scaled.jpg",
+  desc:"Richard Blais-founded refined American in a 1920s Little Italy warehouse (now led by chef Alex Penkin) — a daily-rotating, locally-sourced seasonal menu; Michelin Plate.",
+  items:[["The Yodel (signature dessert)","$17"],["Carne Cruda Asada Toast","$14"],["Buttermilk Biscuit","$14"]],
+  pros:["Celebrity-chef pedigree, Michelin Plate","Striking converted-warehouse space","Inventive, seasonally rotating plates"],
+  cons:["Pricey for the portions","Loud, busy room","Hard weekend reservations"]},
+
+ {pick:0,name:"Animae",cuisine:"Asian-inspired wagyu steakhouse",cat:"Steak",area:"Marina District",addr:"969 Pacific Hwy, San Diego, CA 92101",lat:32.7156,lng:-117.1698,distMi:86,dist:"~86 mi · 1 hr 25 min",
+  google:"4.6",googleN:"2,500",yelp:"4.4",yelpN:"1,655",yelpUrl:"https://www.yelp.com/biz/animae-san-diego-4",web:"https://www.animaesd.com/",menu:"https://www.animaesd.com/menu",img:"",
+  desc:"Brian Malarkey's upscale Asian-inspired wagyu steakhouse on the bayfront, with a Filipino-accented menu by James Beard finalist chef Tara Monsod.",
+  items:[["Miyazaki A5 Strip (4oz)","$132"],["Lobster Palabok","$85"],["Pork Tomahawk Tocino","$66"]],
+  pros:["Real Japanese A5 wagyu + creative Filipino-Asian dishes","Sleek upscale interior near the bay","James Beard-finalist chef, strong service"],
+  cons:["Expensive, especially wagyu","Small-plate format adds up","Noisy / scene-y on weekends"]},
+
+ {pick:0,name:"Coasterra",cuisine:"Modern Mexican (waterfront)",cat:"Mexican",area:"Harbor Island",addr:"880 B Harbor Island Dr, San Diego, CA 92101",lat:32.7272,lng:-117.2050,distMi:88,dist:"~88 mi · 1 hr 30 min",
+  google:"4.4",googleN:"~5,000",yelp:"4.0",yelpN:"4,043",yelpUrl:"https://www.yelp.com/biz/coasterra-san-diego",web:"https://www.coasterra.com/",menu:"https://www.coasterra.com/menu/",img:"",
+  desc:"Sprawling bayfront modern Mexican on Harbor Island with panoramic skyline & Coronado Bridge views, from chef Deborah Scott; a Michelin Guide selection.",
+  items:[["Ancho Chili Roasted Salmon","$36"],["Chargrilled Carne Asada","$36"],["Mexican Paella for Two","$72"]],
+  pros:["Arguably the best bay-and-skyline view in SD","Large patio ideal for sunset / occasions","Michelin Guide-recognized"],
+  cons:["You pay a premium for the view","5% supplemental fee on all checks","Large venue feels impersonal when busy"]},
+
+ {pick:0,name:"Island Prime",cuisine:"Waterfront steakhouse",cat:"Steak",area:"Harbor Island",addr:"880 Harbor Island Dr, San Diego, CA 92101",lat:32.7268,lng:-117.2076,distMi:88,dist:"~88 mi · 1 hr 30 min",
+  google:"4.6",googleN:"",yelp:"4.0",yelpN:"2,910",yelpUrl:"https://www.yelp.com/biz/island-prime-san-diego-3",web:"https://www.islandprime.com/",menu:"https://www.islandprime.com/menus/",img:"",
+  desc:"San Diego's only waterfront steakhouse, on stilts over the bay with skyline & Coronado Bridge views — chef Deborah Scott's premium steaks and seafood.",
+  items:[["Center Cut Filet Mignon","$49"],["Filet Trio","$54"],["Seafood Tower (3–4)","$92"]],
+  pros:["Unmatched waterfront skyline views","High-quality USDA Prime steaks & seafood","Attentive service; popover bread a favorite"],
+  cons:["Premium pricing, easily $100+ pp","Dinner-only most nights","Pricey for the food alone vs the view"]},
+
+ {pick:0,name:"C-Level",cuisine:"California coastal seafood",cat:"Seafood",area:"Harbor Island",addr:"880 Harbor Island Dr, San Diego, CA 92101",lat:32.7265,lng:-117.2080,distMi:88,dist:"~88 mi · 1 hr 30 min",
+  google:"4.6",googleN:"",yelp:"4.0",yelpN:"5,496",yelpUrl:"https://www.yelp.com/biz/c-level-san-diego-6",web:"https://www.clevelsd.com/",menu:"https://www.clevelsd.com/menus/",img:"",
+  desc:"The casual, open-air waterfront sibling to Island Prime (same building) — California coastal seafood and a famous lobster mac on a patio with fire features.",
+  items:[["Lobster Mac 'n Cheese","$30"],["Everything Crusted Ahi","$39"],["C-Level Wagyu Burger","$22"]],
+  pros:["Open daily lunch & dinner, same views","Relaxed patio with fire pits","More approachable prices than upstairs"],
+  cons:["Busy and noisy at peak","Some question lobster quality in the mac","Still upscale for casual ($30–50 pp)"]},
+
+ {pick:0,name:"Solare Ristorante Lounge",cuisine:"Italian (Bib Gourmand)",cat:"Italian",area:"Liberty Station",addr:"2820 Roosevelt Rd, San Diego, CA 92106",lat:32.7405,lng:-117.2120,distMi:90,dist:"~90 mi · 1 hr 35 min",
+  google:"4.6",googleN:"",yelp:"4.0",yelpN:"1,250",yelpUrl:"https://www.yelp.com/biz/solare-ristorante-italiano-san-diego",web:"https://solarelounge.com/",menu:"https://solarelounge.com/",img:"",
+  desc:"A Michelin Bib Gourmand Italian in Liberty Station — house-made pasta daily, a 900° wood-fired pizza oven, and a Wine Spectator Grand Award list.",
+  items:[["Pappardelle Bolognese","$29"],["Ravioli Ricotta e Spinaci","$26"],["Filetto di Manzo","$47"]],
+  pros:["Michelin Bib Gourmand, fresh house pasta","Wine Spectator Grand Award list","Wood-fired pizzas, full lounge w/ live music"],
+  cons:["Opens at 4pm; limited daytime","Reservations recommended","Converted naval base, not waterfront"]},
+
+ {pick:0,name:"Marisi",cuisine:"Coastal Italian",cat:"Italian",area:"La Jolla",addr:"1044 Wall St, La Jolla, CA 92037",lat:32.847148,lng:-117.27359,distMi:78,dist:"~78 mi · 1 hr 18 min",
+  google:"4.4",googleN:"718",yelp:"4.4",yelpN:"943",yelpUrl:"https://www.yelp.com/biz/marisi-la-jolla-2",web:"https://www.marisilajolla.com/",menu:"https://www.marisilajolla.com/menu/dinner-01/",img:"",
+  desc:"Amalfi-inspired coastal Italian — handmade pastas, whole-animal butchery, deep wine list; San Diego Magazine's Best New Restaurant 2023.",
+  items:[["Spicy Rigatoni","$42"],["King Crab Agnolotti","$32"],["Short Rib Pappardelle","mkt"]],
+  pros:["Best New Restaurant 2023 (SD Mag)","Excellent handmade pastas","Beautiful Amalfi-style room, strong service"],
+  cons:["Portions small for the price","Some mains market-price only","Busy and noisy at peak"]},
+
+ {pick:0,name:"Paradisaea",cuisine:"Tropical New American",cat:"American",area:"Bird Rock, La Jolla",addr:"5680 La Jolla Blvd, San Diego, CA 92037",lat:32.81539,lng:-117.27291,distMi:78,dist:"~78 mi · 1 hr 20 min",
+  google:"4.5",googleN:"177",yelp:"4.2",yelpN:"283",yelpUrl:"https://www.yelp.com/biz/paradisaea-san-diego",web:"https://www.paradisaea.com/",menu:"https://www.paradisaea.com/menu-dinner",img:"",
+  desc:"Michelin-recommended tropical-themed restaurant & tiki bar in Bird Rock — produce-led California-American cooking with Asian inflections.",
+  items:[["Japanese Hamachi","$36"],["Cavatelli","$45"],["SRF Steak Frites","$77"]],
+  pros:["Michelin Guide recommended","One of the prettiest rooms / patios in SD","Inventive tiki cocktail program"],
+  cons:["Pricey, premium add-ons","Dinner-only, limited hours","Reservations hard to get"]},
+
+ {pick:0,name:"The Whaling Bar",cuisine:"Coastal American / cocktails",cat:"American",area:"La Jolla",addr:"1132 Prospect St, La Jolla, CA 92037",lat:32.84679,lng:-117.27407,distMi:78,dist:"~78 mi · 1 hr 18 min",
+  google:"4.4",googleN:"114",yelp:"3.9",yelpN:"131",yelpUrl:"https://www.yelp.com/biz/the-whaling-bar-la-jolla",web:"https://www.lavalencia.com/dining/the-whaling-bar",menu:"https://www.lavalencia.com/dining/whaling-bar-menu",img:"",
+  desc:"Historic La Valencia Hotel cocktail bar reopened in 2024 under chef Brian Redzikowski — craft cocktails paired with refined small plates.",
+  items:[["Maine Scallops","$30"],["Lobster Roll 'Dip'","mkt"],["Short Rib Bao","mkt"]],
+  pros:["Iconic, restored historic room","Strong craft cocktail program","Chef Brian Redzikowski at the helm"],
+  cons:["Portions small for the price","Pricey for what you get","Lower Yelp rating (3.9)"]},
+
+ {pick:0,name:"The Marine Room",cuisine:"Oceanfront French-technique seafood",cat:"Seafood",area:"La Jolla Shores",addr:"1950 Spindrift Dr, La Jolla, CA 92037",lat:32.8536,lng:-117.2570,distMi:85,dist:"~85 mi · 1 hr 25 min",
+  google:"4.5",googleN:"~3,200",yelp:"4.0",yelpN:"2,137",yelpUrl:"https://www.yelp.com/biz/the-marine-room-la-jolla-2",web:"https://www.marineroom.com/",menu:"https://www.marineroom.com/menus/",img:"",
+  desc:"A San Diego icon since 1941, perched on the sand in La Jolla where high tides splash the windows — chef Mike Minor's French-technique seafood.",
+  items:[["Black Angus Filet Mignon","$58"],["Surf & Turf","$157"],["Maine Lobster Tail","mkt"]],
+  pros:["Unmatched oceanfront setting, waves on the windows","Refined French-technique seafood","Iconic for anniversaries & occasions"],
+  cons:["Very expensive ($300+ for two)","Portions can be small","Limited hours; reservations essential"]},
+
+ {pick:0,name:"KINDRED",cuisine:"Vegan plates & cocktails",cat:"American",area:"South Park",addr:"1503 30th St, San Diego, CA 92102",lat:32.7335,lng:-117.1300,distMi:90,dist:"~90 mi · 1 hr 30 min",
+  google:"4.6",googleN:"2,170",yelp:"4.5",yelpN:"1,957",yelpUrl:"https://www.yelp.com/biz/kindred-san-diego",web:"https://barkindred.com/",menu:"https://barkindred.com/pages/menu",img:"",
+  desc:"A goth-meets-Victorian cocktail salon in South Park serving entirely vegan plates and inventive drinks; Restaurant of the Year by Eater SD & San Diego Magazine.",
+  items:[["Memphis BBQ Jackfruit Sandwich","$14"],["Cauliflower Steak","$19"],["Beet Risotto","$18"]],
+  pros:["Ambitiously inventive vegan menu, loved by non-vegans","Distinctive heavy-metal-Victorian decor","Creative craft cocktail program"],
+  cons:["Service can be slow when busy","Portions reported small by some","Dark, bar-forward, 21+ leaning"]},
+
+ {pick:0,name:"Casa Gabriela",cuisine:"Elevated regional Mexican",cat:"Mexican",area:"La Mesa",addr:"8384 La Mesa Blvd, La Mesa, CA 91942",lat:32.7670,lng:-117.0230,distMi:85,dist:"~85 mi · 1 hr 25 min",
+  google:"4.3",googleN:"1,469",yelp:"4.2",yelpN:"844",yelpUrl:"https://www.yelp.com/biz/casa-gabriela-la-mesa",web:"https://www.casagabrielalamesa.com/",menu:"https://www.casagabrielalamesa.com/menu/",img:"",
+  desc:"Chef Gabriela Lopez's elevated take on family recipes with Baja-inspired seafood, in downtown La Mesa — modern, refined plates of traditional Mexican dishes.",
+  items:[["Mariscos Molcajete (for two)","$36"],["Jalapeño & White Corn Lasagna","$26"],["Birria de la Abuela Tacos","$20"]],
+  pros:["Inventive, elevated Mexican from family recipes","Strong Baja-style seafood (molcajete for two)","GF options; lively, craft margaritas"],
+  cons:["Pricing runs high for the area","Spice / consistency draw mixed feedback","Closed Mondays; limited dinner hours"]}
+];
+
+const CB=[
+ {pick:0,name:"Jeune et Jolie",cuisine:"Modern French (Michelin)",cat:"French",area:"Carlsbad Village",addr:"2659 State St, Carlsbad, CA 92008",lat:33.1612,lng:-117.3506,distMi:52,dist:"~52 mi · 55 min",
+  google:"4.6",googleN:"~1,400",yelp:"4.4",yelpN:"1,161",yelpUrl:"https://www.yelp.com/biz/jeune-et-jolie-carlsbad",web:"https://www.jeune-jolie.com/",menu:"https://www.jeune-jolie.com/",img:"",
+  desc:"Michelin one-star modern French bistro from chef Eric Bost — a rose-hued, sunlit room in Carlsbad Village serving an elegant prix-fixe plus a casual bar menu.",
+  items:[["4-course prix-fixe (pp)","$120"],["Truite Fumée (smoked trout, caviar)","mkt"],["Pintade (guinea hen)","mkt"]],
+  pros:["Michelin one-star kitchen","Beautiful, romantic rose-hued room","Standout wine & cocktail pairings"],
+  cons:["Pricey prix-fixe format","Reservations hard to get","Portions modest for the price"]},
+
+ {pick:0,name:"Lilo",cuisine:"Coastal tasting menu (Michelin)",cat:"Tasting",area:"Carlsbad Village",addr:"2571 Roosevelt St, Carlsbad, CA 92008",lat:33.1599,lng:-117.3489,distMi:52,dist:"~52 mi · 55 min",
+  google:"4.8",googleN:"~90",yelp:"4.6",yelpN:"97",yelpUrl:"https://www.yelp.com/biz/lilo-carlsbad",web:"https://www.restaurantlilo.com/",menu:"https://www.restaurantlilo.com/",img:"",
+  desc:"Michelin one-star, 24-seat chef's-counter tasting from chef Eric Bost — a multi-course menu rooted in the SoCal coast that changes with tide, farm and micro-season.",
+  items:[["Tasting menu (pp)","$265"],["Spot Prawn, Sea Buckthorn, Lime Leaf","incl"],["Seasonal Coastal Courses","incl"]],
+  pros:["Michelin one-star, intimate chef's counter","Hyper-seasonal, foraged ingredients","Immersive, personal experience"],
+  cons:["Expensive ($265+ before drinks / tip)","Only 24 seats — tough to book","Long multi-course commitment"]},
+
+ {pick:0,name:"Herb & Sea",cuisine:"Modern seafood",cat:"Seafood",area:"Encinitas",addr:"131 W D St, Encinitas, CA 92024",lat:33.0369,lng:-117.2920,distMi:59,dist:"~59 mi · 1 hr",
+  google:"4.4",googleN:"~1,500",yelp:"4.2",yelpN:"857",yelpUrl:"https://www.yelp.com/biz/herb-and-sea-encinitas-2",web:"https://www.herbandsea.com/",menu:"https://www.herbandsea.com/menu",img:"",
+  desc:"Buzzy modern-eclectic seafood in downtown Encinitas — sustainable raw bar, wood-fired pizza, handmade pasta and craft cocktails in a design-forward space.",
+  items:[["Half Baked Red Snapper","$48"],["Ode to Swan (tuna/scallop/salmon/cod)","$34"],["Pork Belly Pizza","$32"]],
+  pros:["Strong sustainable raw bar & crudo","Lively, stylish atmosphere","Broad menu — seafood, pasta, pizza"],
+  cons:["Can get loud and crowded","Entrees run pricey","Closed Mondays"]},
+
+ {pick:0,name:"Vintana Wine + Dine",cuisine:"New American",cat:"American",area:"Escondido",addr:"1205 Auto Park Way, Escondido, CA 92029",lat:33.1268,lng:-117.0760,distMi:66,dist:"~66 mi · 1 hr 5 min",
+  google:"4.4",googleN:"~2,500",yelp:"4.0",yelpN:"3,127",yelpUrl:"https://www.yelp.com/biz/vintana-wine-dine-escondido",web:"https://www.dinevintana.com/",menu:"https://www.dinevintana.com/",img:"",
+  desc:"Penthouse-level modern California / New American atop The Centre Escondido — floor-to-ceiling views, a fire-pit lanai, and chef Deborah Scott signatures.",
+  items:[["Everything Crusted Ahi Tuna","$40"],["Macadamia-Coconut Sea Bass","$40"],["Slow Braised Short Rib","$39"]],
+  pros:["Sweeping penthouse views & patio","Large menu with strong signatures","Good happy hour & date-night deals"],
+  cons:["Inconsistent service","Some find it overpriced","Auto-park-way location lacks charm"]}
+];
+
+const CITIES={
+  la:{label:"Los Angeles",socal:true,data:LA},
+  sd:{label:"San Diego",socal:true,data:SD},
+  carlsbad:{label:"Carlsbad / North County",socal:true,data:CB},
+  sf:{label:"San Francisco",socal:false,data:SF}
+};
+let R=LA, CITY=CITIES.la;
 
 const dirLink=a=>"https://www.google.com/maps/dir/Irvine,+CA/"+encodeURIComponent(a);
 const gUrl=r=>"https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(r.name+" "+r.addr);
@@ -424,12 +698,15 @@ const dishPic=(r,it)=> (it[2]&&it[2].includes('/menu/'))
 
 let state={filter:"all",sort:"vibe"};
 
-/* ---- FILTER BUTTONS ---- */
-const cats=[...new Set(R.map(r=>r.cat))].sort();
+/* ---- FILTER BUTTONS (rebuilt per city) ---- */
 const fwrap=document.getElementById('filters');
-const fbtns=[["all","All 24"],["pick","★ Your vibe"],...cats.map(c=>[ "cat:"+c, c])];
-fwrap.innerHTML=fbtns.map(([v,l],i)=>
-  `<button class="chip filt ${v==='pick'?'vibe':''} ${i===0?'active':''}" data-filter="${v}">${l}</button>`).join(' ');
+function buildFilters(){
+  const cats=[...new Set(R.map(r=>r.cat))].sort();
+  const hasPick=R.some(r=>r.pick);
+  const fbtns=[["all","All "+R.length], ...(hasPick?[["pick","★ Your vibe"]]:[]), ...cats.map(c=>["cat:"+c,c])];
+  fwrap.innerHTML=fbtns.map(([v,l],i)=>
+    `<button class="chip filt ${v==='pick'?'vibe':''} ${i===0?'active':''}" data-filter="${v}">${l}</button>`).join(' ');
+}
 
 /* ---- RENDER ---- */
 const listEl=document.getElementById('list'), countEl=document.getElementById('count');
@@ -493,20 +770,20 @@ const pinIcon=(n,c)=>L.divIcon({className:'',html:
    transform:rotate(-45deg);display:flex;align-items:center;justify-content:center;
    box-shadow:0 2px 5px rgba(0,0,0,.4);border:2px solid #fff;font-weight:800;font-size:10.5px">
    <span style="transform:rotate(45deg)">${n}</span></div>`,iconSize:[24,24],iconAnchor:[12,24]});
-L.marker([IRVINE.lat,IRVINE.lng],{icon:L.divIcon({className:'',html:
+const homeMarker=L.marker([IRVINE.lat,IRVINE.lng],{icon:L.divIcon({className:'',html:
   `<div style="background:#16a34a;color:#fff;width:28px;height:28px;border-radius:50% 50% 50% 0;
    transform:rotate(-45deg);display:flex;align-items:center;justify-content:center;border:2px solid #fff;
    box-shadow:0 2px 5px rgba(0,0,0,.4)"><span style="transform:rotate(45deg)">🏠</span></div>`,iconSize:[28,28],iconAnchor:[14,28]})})
-  .addTo(map).bindPopup(`<b>${IRVINE.name}</b> — home base`);
+  .bindPopup(`<b>${IRVINE.name}</b> — home base`);
 const markerLayer=L.layerGroup().addTo(map);
 const markers={};
 
 function render(){
   const list=R.filter(passes).sort(sorter);
   listEl.innerHTML=list.map(cardHTML).join('');
-  countEl.textContent=`Showing ${list.length} of 24 restaurants`;
+  countEl.textContent=`Showing ${list.length} of ${R.length} · ${CITY.label}`;
   markerLayer.clearLayers(); for(const k in markers)delete markers[k];
-  const pts=[[IRVINE.lat,IRVINE.lng]];
+  const pts=[];
   list.forEach(r=>{
     const m=L.marker([r.lat,r.lng],{icon:pinIcon(r.rank,r.pick?'#d99a2b':'#c0182b')})
       .bindPopup(`<b>#${r.rank} ${r.name}</b>${r.pick?' ⭐':''}<br>${r.cuisine} · ${r.area}<br>
@@ -515,7 +792,9 @@ function render(){
         <a href="${dirLink(r.addr)}" target="_blank">Directions →</a>`);
     m.addTo(markerLayer); markers[r.rank]=m; pts.push([r.lat,r.lng]);
   });
-  if(pts.length>1)map.fitBounds(pts,{padding:[40,40]});
+  if(CITY.socal){homeMarker.addTo(map); pts.push([IRVINE.lat,IRVINE.lng]);}
+  else if(map.hasLayer(homeMarker)){map.removeLayer(homeMarker);}
+  if(pts.length)map.fitBounds(pts,{padding:[40,40]});
   bindCards();
 }
 function flash(rank){
@@ -545,7 +824,14 @@ document.addEventListener('click',e=>{
     if(!grid)setTimeout(()=>map.invalidateSize(),60);}
 });
 
-render();
+function setCity(key){
+  CITY=CITIES[key]; R=CITY.data; R.forEach((r,i)=>r.rank=i+1);
+  state.filter="all";
+  buildFilters();
+  render();
+}
+document.getElementById('citysel').addEventListener('change',e=>setCity(e.target.value));
+setCity('la');
 </script>
 </body>
 </html>
