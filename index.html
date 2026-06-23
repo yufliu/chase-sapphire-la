@@ -80,6 +80,9 @@
 
   .rbody{padding:11px 14px 14px}
   .desc{font-size:12.6px;color:#4a3438;margin:0 0 9px;line-height:1.45}
+  .rhours{font-size:11.6px;color:#5a4145;background:#faf2f3;border:1px solid #f0e2e4;border-radius:8px;
+        padding:6px 10px;margin:0 0 11px;line-height:1.4}
+  .rhours b{color:var(--red2)}
   .items{display:flex;flex-direction:column;gap:5px;margin-bottom:11px}
   a.item{display:flex;justify-content:space-between;align-items:center;gap:10px;text-decoration:none;
         background:#faf2f3;border:1px solid #f0e2e4;border-radius:9px;padding:7px 11px;color:var(--ink);transition:.12s}
@@ -688,6 +691,69 @@ const CITIES={
 };
 let R=LA, CITY=CITIES.la;
 
+// hours for all 59 + images for non-LA (and the few LA cards that lacked one), merged by name
+const EXTRA={
+ "The Nice Guy":{hours:"Daily 6pm–2am"},
+ "Delilah":{hours:"Tue–Sun 6:30pm–2am · Mon closed"},
+ "Steak 48":{hours:"Sun–Thu 4–9:45pm · Fri–Sat 4–10:15pm"},
+ "Gwen":{hours:"Tue–Thu 5–9pm · Fri–Sat 5–9:30pm · Sun 4:30–8:30pm · Mon closed"},
+ "chi SPACCA":{hours:"Mon–Thu 6–9:30pm · Fri–Sat 5:30–10pm · Sun 5:30–9:30pm"},
+ "Majordōmo":{hours:"Mon–Fri 5:30–10pm · Sat–Sun brunch 11:30am–2:30pm & dinner 5–10:30pm"},
+ "République":{hours:"Daily 8am–2pm · Dinner Tue–Sat 5:30–10pm · Sun–Mon no dinner"},
+ "Gjelina":{hours:"Daily 9am–10:30pm (dinner from 5pm)"},
+ "Ronan":{hours:"Mon–Thu 5:30–9pm · Fri 5:30–9:30pm · Sat 5–9:30pm · Sun 5–9pm"},
+ "Super Peach":{hours:"Mon–Thu 11am–9pm · Fri–Sat 11:30am–10pm · Sun 11am–9pm",img:"https://www.datocms-assets.com/146637/1760735929-2025-10_jfong_super-peach-webres_003.jpg?auto=compress%2Cformat"},
+ "Harriet's Rooftop":{hours:"Mon–Thu 5pm–late · Fri 5pm–2am · Sat 4pm–2am · Sun 3–10pm"},
+ "La Dolce Vita":{hours:"Tue–Thu 5:30–10pm · Fri–Sat 5:30–11pm · Sun 5:30–10pm · Mon closed"},
+ "Loreto":{hours:"Mon–Thu 5–9pm · Fri–Sat 5–10:30pm · Sun 5–9pm"},
+ "Amiga Amore":{hours:"Wed–Thu 5–9:30pm · Fri 5–10:30pm · Sat 4:30–10:30pm · Sun 10am–2pm · Mon–Tue closed",img:"https://static.wixstatic.com/media/81391f_e0bc4510f06442219be0ea5e322a2c4f~mv2.jpg/v1/fill/w_1000,h_667,al_c,q_85/file.jpg"},
+ "Pasjoli":{hours:"Mon–Thu 5–9:30pm · Fri 5–10:30pm · Sat–Sun 11:30am–2:30pm & 5–10:30pm"},
+ "Dunsmoor":{hours:"Daily 5:30–10pm"},
+ "Camélia":{hours:"Sun–Thu 5–10pm · Fri–Sat 5–10:30pm"},
+ "Meteora":{hours:"Wed–Thu & Sun 5:30–9:30pm · Fri–Sat 5:30–10pm · Mon–Tue closed"},
+ "Anajak Thai Cuisine":{hours:"Tue–Sun 4–9pm · Mon closed (Tue = walk-in Thai Taco Tuesday)"},
+ "Petit Trois Le Valley":{hours:"Daily 12–10pm · Sat–Sun brunch 8am–3pm"},
+ "Xuntos":{hours:"Tue–Thu 12–10pm · Fri–Sat 12–11pm · Sun–Mon closed"},
+ "Vespertine":{hours:"Tue–Sat seatings 6–8:30pm · Sun–Mon closed"},
+ "Mélisse":{hours:"Wed 6:30–9pm · Thu–Sat 5:30–9pm · Sun–Tue closed",img:"https://images.squarespace-cdn.com/content/v1/5dd6fcec102f557c3d9486e1/1577753194074-PI05WDWWYREF1CT080CM/MelisseLanding.jpg?format=1500w"},
+ "Somni":{hours:"Wed–Sun 5:30–11pm · Mon–Tue closed"},
+ "Angler":{hours:"Lunch Tue–Sat 12–2:30pm · Dinner daily 5–9pm",img:"https://anglerrestaurants.com/wp-content/uploads/2024/05/copperfish-3.png"},
+ "Aziza":{hours:"Wed–Fri 5–10pm · Sat–Sun 10:30am–1:30pm & 5–10pm · Mon–Tue closed",img:"https://images.squarespace-cdn.com/content/v1/6983c4e9211dcf5cebf4a2a2/2ca9f82b-a6e3-46cc-a8ce-711426191c52/DSC_2738.jpg"},
+ "Bodega SF":{hours:"Lunch daily 11am–3pm · Dinner Sun–Thu 5–10pm · Fri–Sat 5–10:30pm",img:"https://images.squarespace-cdn.com/content/v1/66d792fdaeff3c2991c349c2/c096033f-2aab-47c8-8790-153b1d4336aa/Bodega_x_ERIN_NG__Apr_23__-_025-removebg.jpg"},
+ "Californios":{hours:"Tue–Sat 5–9:30pm · Sun–Mon closed",img:"https://www.californiossf.com/images/gallery1.png"},
+ "Che Fico":{hours:"⚠ Temporarily closed — verify",img:"https://images.squarespace-cdn.com/content/v1/5c7433f7e5f7d17a1ff644cf/1717429944367-JTN22W9HTA3LH42KLH4H/EWP2022_CheFico-1187.jpg"},
+ "Gary Danko":{hours:"Thu–Mon 5–10pm · Tue–Wed closed",img:"https://garydanko.com/wp-content/uploads/garydanko/Souffle_GD10153_V2-533x800.jpg"},
+ "Hilda and Jesse":{hours:"Mon & Thu–Fri 5:30–9pm · Sat–Sun 10am–2pm · Tue–Wed closed",img:"https://images.squarespace-cdn.com/content/v1/5c4a1641cc8fed7d3000f92b/8a41fbe2-ac18-4e7f-ab6d-f466dddbe345/IMG_3159.jpeg"},
+ "Little Shucker":{hours:"Mon–Tue 11:30am–6pm · Wed–Thu 11:30am–8:30pm · Fri–Sat 12–9pm · Sun 12–8:30pm",img:"https://images.squarespace-cdn.com/content/v1/64c848d04b560140f425a917/0510cfa2-46a9-4d6a-ba2b-a9c7fbc2389c/little+shucker+crudo.JPG"},
+ "Niku Steakhouse":{hours:"Sun–Thu 5–9pm · Fri–Sat 5–10pm",img:"https://images.squarespace-cdn.com/content/v1/5b2fe9caa2772c8ed2a167de/c45cdc95-1995-4d0e-8113-bc9a08bbf736/niku_2024_grilled_tom_DSC1467.jpg"},
+ "Nisei":{hours:"Wed–Sun 5–9pm · Mon–Tue closed",img:"https://images.squarespace-cdn.com/content/v1/61c226eb46a75a2c2ab2a04c/538a3478-0fe3-45f7-a4f7-ce9f8046b735/nisei_daruma01+%281%29.png"},
+ "O' by Claude Le Tohic":{hours:"Tue–Sat 5:30–8:30pm · Sun–Mon closed",img:"https://one65sf.com/img/privatedining/mossroom.jpg"},
+ "Rich Table":{hours:"Daily 5–10pm"},
+ "Saison":{hours:"Tue–Sat 5–9:30pm · Sun–Mon closed",img:"https://saisonsf.com/wp-content/uploads/2025/12/20250124_bydoratsui-saison-01993.jpg"},
+ "Saison Cellar & Wine Bar":{hours:"Mon–Sat 3–10pm · Sun closed",img:"https://saisonwinebar.com/wp-content/uploads/2025/06/SaisonWineBarSF-June2025-BexWyantPhoto-210-1024x683.jpg"},
+ "State Bird Provisions":{hours:"Sun–Thu 5:30–10pm · Fri–Sat 5:30–10:30pm",img:"https://images.squarespace-cdn.com/content/v1/6500a081b4e5021dc4f378b1/1711472578222-EFSRMR8UG9MRT10WNEN3/11.21.23-1391.jpg"},
+ "The Progress":{hours:"Sun–Thu 5:30–10pm · Fri–Sat 5:30–11pm",img:"https://images.squarespace-cdn.com/content/v1/6501f6c205a149092c5a1943/101cbc6d-86a6-414b-a18f-3a8387919bb8/PRO%2BDining%2BRoom%2B-%2BKristen%2BLoken%2B%25281%2529.jpg"},
+ "Herb & Wood":{hours:"Sun–Thu 5–9pm · Fri–Sat 5–9:30pm",img:"https://images.squarespace-cdn.com/content/v1/5e82c1733ddff337f1d4f916/1620033918837-DWD9A8F55N57QSOGUA0Z/Herb%2B%26%2BWood%2B-%2BMarch%2B2021%2BAll%2BFood%2BPhotos%2BJT-373.jpg"},
+ "Ironside Fish & Oyster":{hours:"Mon–Thu 11:30am–10pm · Fri 11:30am–11pm · Sat 11am–11pm · Sun 11am–10pm"},
+ "Kettner Exchange":{hours:"Mon–Thu 5pm–12am · Fri–Sat 5pm–1am · Sun 11am–12am",img:"https://www.kettnerexchange.com/wp-content/uploads/kex-fest-2022.jpg"},
+ "Juniper & Ivy":{hours:"Sun–Thu 5–9pm · Fri–Sat 5–10pm"},
+ "Animae":{hours:"Sun–Thu 5–9pm · Fri–Sat 5–9:30pm",img:"https://images.squarespace-cdn.com/content/v1/69b47ba8eea16b22f8adc653/24b41076-691d-475c-970f-29d24be33403/Fall+Flatlay?format=2500w"},
+ "Coasterra":{hours:"Sun–Thu 11:30am–9pm · Fri–Sat 11:30am–9:30pm",img:"https://www.coasterra.com/wp-content/uploads/2026/04/0057Emily_Michael-1.jpg"},
+ "Island Prime":{hours:"Sun–Fri 5–9pm · Sat 4–9pm",img:"https://www.islandprime.com/wp-content/uploads/2023/06/Menu-Photo-2-1200.jpg"},
+ "C-Level":{hours:"Daily 11am–9pm",img:"https://www.islandprime.com/wp-content/uploads/2023/06/About-Us-square.jpg"},
+ "Solare Ristorante Lounge":{hours:"Mon–Thu 4:30pm–close · Fri–Sun 11:30am–3pm & 4:30pm–close",img:"https://solarelounge.com/wp-content/uploads/2015/01/dining-img-01.png"},
+ "Marisi":{hours:"Mon–Thu 5–9pm · Fri–Sat 4:30–10pm · Sun 4:30–9pm · Brunch Sat–Sun 11am–2pm",img:"https://images.getbento.com/accounts/36c7a533fdccc20031a634e5a7ba9b74/media/images/81926Pastas.jpg?w=1200&fit=crop&auto=compress,format&cs=origin"},
+ "Paradisaea":{hours:"Tue–Thu 4–9pm · Fri–Sat 4–10pm · Sun 4–9pm · Mon closed",img:"https://images.squarespace-cdn.com/content/v1/69bc6bcbfb59137801aed552/410a853a-1fc9-41af-b7bf-a560c7b06d89/secretstan_0O0A8705_edited.jpg"},
+ "The Whaling Bar":{hours:"Daily 4pm–late (dinner 5–10pm)",img:"https://whalingbarlj.com/wp-content/uploads/The-Whaling-Bar-March-2024-Food-Beverage-019.jpg"},
+ "The Marine Room":{hours:"Wed–Sun 4:30–9pm · Mon–Tue closed",img:"https://www.marineroom.com/wp-content/uploads/2026/02/squid-10.jpg"},
+ "KINDRED":{hours:"Mon–Thu 5–10pm · Fri 5pm–12am · Sat 11:30am–12am · Sun 11:30am–10pm",img:"https://cdn.shopify.com/s/files/1/0405/4636/9692/files/Kindred-11.21.23-68.jpg?v=1701303387"},
+ "Casa Gabriela":{hours:"Tue–Fri 3:30–9pm · Sat–Sun 10:30am–2pm & 3:30–9pm · Mon closed",img:"https://www.casagabrielalamesa.com/wp-content/uploads/2023/06/Menu-Photo-1-06.14.23.jpg"},
+ "Jeune et Jolie":{hours:"Wed–Sat 5–10pm · Sun 4:30–10pm · Mon–Tue closed",img:"https://images.squarespace-cdn.com/content/v1/5c8aa5ec755be25d2ecf197a/e78a3cc5-3a0c-4385-b204-b9bfb66bf3b0/Dinner+06.10.26+website.jpg"},
+ "Lilo":{hours:"Tue–Sat 5–10pm · Sun–Mon closed",img:"https://images.squarespace-cdn.com/content/v1/64552aa51313ce7d53a4cb96/02cf4919-2e70-4cf6-8b65-f47569332c45/Studio+Session+Lilo+3-+13+Caviar.jpg"},
+ "Herb & Sea":{hours:"Tue–Sat 5–9pm · Sun 5–8pm · Mon closed",img:"https://images.squarespace-cdn.com/content/v1/676213ddd4088f6df947085d/3a034522-e675-4fc8-9425-b28e4aafbc5f/HS-Fall2024_KimberlyMotos+%2849+of+66%29.jpg"},
+ "Vintana Wine + Dine":{hours:"Tue–Sun 11:30am–9pm · Mon closed",img:"https://www.dinevintana.com/wp-content/uploads/2023/05/About-Us-square-1.jpg"}
+};
+
 const dirLink=a=>"https://www.google.com/maps/dir/Irvine,+CA/"+encodeURIComponent(a);
 const gUrl=r=>"https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(r.name+" "+r.addr);
 const priceNum=r=>{const m=(r.items[0][1].match(/\d+/));return m?+m[0]:0;};
@@ -746,6 +812,7 @@ function cardHTML(r){
     </div>
     <div class="rbody">
       <p class="desc">${r.desc}</p>
+      ${r.hours?`<div class="rhours">🕐 <b>Hours:</b> ${r.hours}</div>`:''}
       <div class="items">${items}</div>
       <div class="seeyelp">📷 Tap a dish to see photos of that specific dish</div>
       <div class="pc">
@@ -826,6 +893,7 @@ document.addEventListener('click',e=>{
 
 function setCity(key){
   CITY=CITIES[key]; R=CITY.data; R.forEach((r,i)=>r.rank=i+1);
+  R.forEach(r=>{const e=EXTRA[r.name]; if(e){ if(e.hours)r.hours=e.hours; if(e.img&&!r.img)r.img=e.img; }});
   state.filter="all";
   buildFilters();
   render();
