@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sapphire Reserve · LA Exclusive Tables — RestaurantMaxxer</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<style>
+  :root{
+    --red:#c0182b; --red2:#8c0f1b; --red-soft:#fdecee; --red-line:#f3c7cc;
+    --ink:#27141a; --sub:#7a6a6e; --line:#ecdcde; --bg:#fbf4f4; --card:#fff;
+    --gold:#b8862f; --green:#1c7a4d; --green-soft:#eaf6ef;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+       color:var(--ink);background:var(--bg);line-height:1.5;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1320px;margin:0 auto;padding:22px 18px 70px}
+  a{color:var(--red)}
+
+  header.hero{background:linear-gradient(135deg,#5e0a12,#a3121f 55%,#e23b48);color:#fff;border-radius:18px;
+       padding:26px 30px;box-shadow:0 10px 30px rgba(140,15,27,.3)}
+  header.hero h1{margin:0 0 6px;font-size:25px;letter-spacing:-.4px}
+  header.hero h1 .light{opacity:.8;font-weight:500}
+  header.hero p{margin:4px 0;color:#ffdfe2;font-size:14px;max-width:820px}
+  .badge{display:inline-block;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.3);
+       color:#fff;padding:4px 11px;border-radius:999px;font-size:11.5px;font-weight:700;margin-bottom:10px;letter-spacing:.4px}
+  .stat{display:inline-flex;gap:16px;margin-top:12px;flex-wrap:wrap}
+  .stat b{font-size:18px}.stat span{font-size:11.5px;color:#ffd2d6;display:block;font-weight:600;letter-spacing:.3px}
+
+  .alert{background:#fff7e6;border:1px solid #f3d488;color:#7a5510;border-radius:12px;padding:13px 16px;
+       margin:16px 0 4px;font-size:13.5px}
+  .alert b{color:#8a3f00}
+
+  .bar{position:sticky;top:0;z-index:500;background:rgba(251,244,244,.92);backdrop-filter:blur(8px);
+       padding:12px 2px 10px;margin-top:14px;border-bottom:1px solid var(--line)}
+  .bar .row{display:flex;gap:7px;flex-wrap:wrap;align-items:center}
+  .bar .lbl{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;color:var(--sub);margin-right:2px}
+  .chip{font-size:12.5px;font-weight:700;border:1px solid var(--line);background:#fff;color:#5a4145;
+       padding:6px 12px;border-radius:999px;cursor:pointer;transition:.13s}
+  .chip:hover{border-color:var(--red)}
+  .chip.active{background:var(--red);color:#fff;border-color:var(--red)}
+  .chip.vibe.active{background:var(--gold);border-color:var(--gold)}
+
+  .app{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(0,1fr);gap:20px;align-items:start;margin-top:16px}
+  .app.gridview{grid-template-columns:1fr}
+  .app.gridview .mapcol{display:none}
+  .app.gridview .list{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:15px}
+  .mapcol{position:sticky;top:74px;height:calc(100vh - 92px)}
+  #map{height:100%;width:100%;border-radius:16px;border:1px solid var(--line);z-index:0}
+  .maphint{font-size:11.5px;color:var(--sub);margin-top:7px;text-align:center}
+  .list{display:flex;flex-direction:column;gap:15px}
+  .count{font-size:12.5px;color:var(--sub);font-weight:600;margin:2px 2px 0}
+
+  .rcard{background:var(--card);border:1px solid var(--line);border-radius:15px;overflow:hidden;
+        box-shadow:0 2px 9px rgba(140,15,27,.06);scroll-margin-top:80px;transition:box-shadow .15s,border-color .15s}
+  .rcard:hover{box-shadow:0 6px 20px rgba(140,15,27,.13);border-color:var(--red-line)}
+  .rcard.flash{border-color:var(--red);box-shadow:0 0 0 3px var(--red-soft)}
+  .rhead{display:flex;gap:13px;padding:13px 14px 0}
+  .thumb{width:104px;height:104px;border-radius:12px;flex:0 0 104px;overflow:hidden;position:relative;
+        background:linear-gradient(135deg,#f0d6d9,#e0b9bd)}
+  .thumb img{width:100%;height:100%;object-fit:cover;display:block;position:relative;z-index:1}
+  .thumb .fb{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#a8767c;
+        font-weight:800;font-size:13px;text-align:center;padding:0 6px;z-index:0}
+  .thumb .num{position:absolute;top:5px;left:5px;z-index:2;background:rgba(39,20,26,.82);color:#fff;
+        font-size:11px;font-weight:800;width:21px;height:21px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+  .rmain{flex:1;min-width:0}
+  .rname{font-size:17px;font-weight:800;letter-spacing:-.3px;margin:1px 0 1px;display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+  .vibebadge{font-size:9.5px;font-weight:800;background:var(--gold);color:#fff;padding:2px 7px;border-radius:999px;letter-spacing:.4px}
+  .rcuis{font-size:12px;color:var(--sub)}
+  .rcuis .cat{display:inline-block;background:var(--red-soft);color:var(--red2);font-weight:700;border-radius:5px;padding:1px 6px;margin-right:5px;font-size:11px}
+  .ratings{display:flex;gap:7px;flex-wrap:wrap;margin:7px 0 3px}
+  a.rat{font-size:11.5px;font-weight:700;padding:4px 9px;border-radius:7px;background:#f6eef0;color:#3a2429;
+        text-decoration:none;display:inline-flex;align-items:center;gap:3px;border:1px solid #eedfe1}
+  a.rat:hover{background:var(--red-soft);border-color:var(--red-line)}
+  a.rat .g{color:#1a73e8}a.rat .y{color:#d32323}a.rat .ext{opacity:.45;font-size:9px}
+  .rdist{font-size:11.5px;color:var(--sub);font-weight:600}
+
+  .rbody{padding:11px 14px 14px}
+  .desc{font-size:12.6px;color:#4a3438;margin:0 0 9px;line-height:1.45}
+  .items{display:flex;flex-direction:column;gap:5px;margin-bottom:11px}
+  a.item{display:flex;justify-content:space-between;align-items:center;gap:10px;text-decoration:none;
+        background:#faf2f3;border:1px solid #f0e2e4;border-radius:9px;padding:7px 11px;color:var(--ink);transition:.12s}
+  a.item:hover{background:var(--red-soft);border-color:var(--red-line)}
+  a.item .iname{font-size:13px;font-weight:600;display:flex;align-items:center;gap:6px;min-width:0}
+  a.item .cam{font-size:11px;opacity:.6}
+  a.item .ip{font-size:13px;font-weight:800;color:var(--gold);white-space:nowrap}
+  .seeyelp{font-size:10.5px;color:var(--sub);margin:-6px 0 11px;padding-left:2px}
+
+  .pc{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:12px}
+  .pc .box{border-radius:10px;padding:9px 11px}
+  .pc .pros{background:var(--green-soft);border:1px solid #cfe9da}
+  .pc .cons{background:#fdeef0;border:1px solid #f6d3d8}
+  .pc h5{margin:0 0 5px;font-size:11px;letter-spacing:.4px;text-transform:uppercase}
+  .pc .pros h5{color:var(--green)}.pc .cons h5{color:var(--red)}
+  .pc ul{margin:0;padding-left:15px}
+  .pc li{font-size:11.7px;margin:3px 0;line-height:1.35}
+  .pc .pros li::marker{content:"✓  "}.pc .cons li::marker{content:"✕  "}
+
+  .links{display:flex;gap:7px;flex-wrap:wrap}
+  .links a{flex:1;text-align:center;text-decoration:none;font-size:12px;font-weight:700;padding:8px 6px;
+        border-radius:9px;border:1px solid var(--line);color:var(--red2);background:#fff;min-width:72px}
+  .links a:hover{background:var(--red-soft)}
+  .links a.dir{background:var(--red);color:#fff;border-color:var(--red)}
+  .links a.dir:hover{background:var(--red2)}
+
+  .qc{margin-top:34px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px 20px}
+  .qc h3{margin:0 0 10px;font-size:15px}
+  .qc ul{margin:0;padding-left:18px}.qc li{font-size:12.6px;margin:5px 0;color:#4a3438}
+  footer{margin-top:26px;font-size:12px;color:var(--sub);border-top:1px solid var(--line);padding-top:16px}
+  .foot-note{font-size:11.4px;color:var(--sub);margin-top:8px}
+  .leaflet-popup-content{font-size:12.5px;line-height:1.4}
+  @media(max-width:900px){
+    .app{grid-template-columns:1fr}
+    .mapcol{position:relative;top:0;height:320px;order:-1}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <span class="badge">CHASE SAPPHIRE RESERVE · EXCLUSIVE TABLES · LOS ANGELES</span>
+    <h1>RestaurantMaxxer <span class="light">— all 24 LA tables, mapped from Irvine</span></h1>
+    <p>The complete Sapphire Reserve list, quality-checked. Filter, sort, and tap pins on the live map. Your 6 <b>★ vibe</b> picks (lively &amp; trendy) are gold; every Google/Yelp rating links to its real reviews page, and each dish links to its Yelp photos.</p>
+    <div class="stat">
+      <div><b>24</b><span>RESTAURANTS</span></div>
+      <div><b>6</b><span>MATCH YOUR VIBE</span></div>
+      <div><b>$150</b><span>CREDIT (H1 2026)</span></div>
+      <div><b>~40–65 mi</b><span>FROM IRVINE</span></div>
+    </div>
+  </header>
+
+  <div class="alert">
+    ⏰ <b>Time-sensitive:</b> the up-to-<b>$150</b> Exclusive Tables credit for Jan–Jun 2026 <b>expires June 30, 2026</b> (~12 days out). Book this month or it resets to a fresh $150 for Jul–Dec.
+  </div>
+
+  <div class="bar">
+    <div class="row" style="margin-bottom:8px">
+      <span class="lbl">Filter</span>
+      <span id="filters"></span>
+    </div>
+    <div class="row">
+      <span class="lbl">Sort</span>
+      <button class="chip sort active" data-sort="vibe">★ Vibe first</button>
+      <button class="chip sort" data-sort="rating">Top rated</button>
+      <button class="chip sort" data-sort="dist">Closest to Irvine</button>
+      <button class="chip sort" data-sort="priceA">$ Low→High</button>
+      <button class="chip sort" data-sort="priceD">$ High→Low</button>
+    </div>
+    <div class="row" style="margin-top:8px">
+      <span class="lbl">View</span>
+      <button class="chip view active" data-view="split">🗺️ Map + list</button>
+      <button class="chip view" data-view="grid">▦ Grid (3 across)</button>
+    </div>
+  </div>
+
+  <div class="app" id="app">
+    <div>
+      <div class="count" id="count"></div>
+      <div class="list" id="list"></div>
+    </div>
+    <aside class="mapcol">
+      <div id="map"></div>
+      <div class="maphint">🟡 your vibe · 🔴 other tables · 🟢 Irvine — tap a pin, or tap a card to fly there</div>
+    </aside>
+  </div>
+
+  <div class="qc">
+    <h3>✅ Quality-check notes (corrections the research surfaced)</h3>
+    <ul>
+      <li><b>Steak 48</b> — verified address is <b>9680 Wilshire Blvd</b>, Beverly Hills (not Santa Monica Blvd).</li>
+      <li><b>Gjelina</b> — the pizza is officially the <b>“Mixed Mushroom”</b> ($27); menu adds a 20% service fee.</li>
+      <li><b>Camélia</b> — the signature toast is widely reviewed as <b>uni &amp; otoro (bluefin)</b> toast (~$30), ~3 small pieces.</li>
+      <li><b>Petit Trois Le Valley</b> — in-house prices have risen; third-party menus list Le Big Mec ~$41 / omelette ~$31 (delivery markup). Treat the ~ figures as approximate — confirm in-house.</li>
+      <li><b>La Dolce Vita</b> — lasagna shows $30 on some menus, $25 on others; confirm when booking.</li>
+      <li><b>Meteora</b> — tasting pricing has climbed over time (older sources ~$95); $115/$165 reflects recent menus.</li>
+      <li><b>Loreto</b> / <b>Super Peach</b> / <b>Xuntos</b> — earlier guesses corrected: Loreto = Baja mariscos (Grupo Almares), Super Peach = David Chang/Momofuku, Xuntos = Galician-Spanish tapas. No Mexican-Japanese spot exists in the program.</li>
+      <li><b>Somni</b> now holds <b>3 Michelin stars</b> (June 2025) at $645pp — LA’s priciest tasting menu.</li>
+      <li>Dish links open each restaurant’s <b>Yelp food-photos</b> page (Yelp blocks direct image hotlinking, so a few card thumbnails fall back to a name tile).</li>
+    </ul>
+  </div>
+
+  <footer>
+    <b>How the credit works:</b> add your Chase Sapphire Reserve to OpenTable’s
+    <a href="https://www.opentable.com/c/chasedining/" target="_blank" rel="noopener">Chase Dining page</a>,
+    book an Exclusive Table, dine, and pay with the Reserve — up to $150 posts back as a statement credit (per half-year, max $300/yr).
+    Full list: <a href="https://www.opentable.com/sapphire-reserve/los-angeles" target="_blank" rel="noopener">OpenTable · Sapphire Reserve · Los Angeles</a>.
+    <div class="foot-note">Built Jun 18 2026 · ratings, prices &amp; review sentiment gathered from official sites, Google, Yelp &amp; OpenTable and may shift — confirm on the restaurant’s page when booking. Pros/cons distilled from real customer reviews.</div>
+  </footer>
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+const IRVINE={name:"Irvine, CA",lat:33.6846,lng:-117.8265};
+const Y=s=>`https://www.yelp.com/biz_photos/${s}?tab=food`;
+
+const R=[
+ {pick:1,name:"The Nice Guy",cuisine:"Italian-American",cat:"Italian",area:"West Hollywood",addr:"401 N La Cienega Blvd, Los Angeles, CA 90048",lat:34.0769,lng:-118.3760,distMi:48,dist:"~48 mi · 50–65 min",
+  google:"4.0",googleN:"",yelp:"~3.8*",yelpN:"859",yelpUrl:"https://www.yelp.com/biz/the-nice-guy-los-angeles-3",
+  web:"https://www.theniceguyla.com/",menu:"https://www.theniceguyla.com/menu/dinner/",
+  img:"https://hwoodgroup.com/wp-content/uploads/2023/10/HWoodGroupTheNiceGuyLA_%C2%A9VanessaTierneyPhotography_VTP_6593.jpg",
+  desc:"The h.wood Group's clubby Italian-American hideaway — as much nightlife as restaurant, celeb-spotting rivals the food.",
+  items:[["Spicy Rigatoni alla Vodka","$32",Y("the-nice-guy-los-angeles-3")],["Chicken Parm","$38",Y("the-nice-guy-los-angeles-3")],["Lobster Pizza","$37",Y("the-nice-guy-los-angeles-3")]],
+  pros:["Electric celeb-spotting, speakeasy energy + live music","Crowd-pleasing rigatoni vodka & chicken parm","Attentive, friendly service"],
+  cons:["So dark you can't read the menu","Food can be inconsistent / salty for the price","Hard to book; pricey cocktails + entertainment fees"]},
+
+ {pick:1,name:"Delilah",cuisine:"American supper club",cat:"American",area:"West Hollywood",addr:"7969 Santa Monica Blvd, West Hollywood, CA 90046",lat:34.0900,lng:-118.3636,distMi:48,dist:"~48 mi · 60–75 min",
+  google:"4.2",googleN:"550+",yelp:"n/a",yelpN:"747",yelpUrl:"https://www.yelp.com/biz/delilah-west-hollywood",
+  web:"https://www.delilahrestaurants.com/location/los-angeles/",menu:"https://www.delilahrestaurants.com/menu/dinner/",
+  img:"https://images.getbento.com/W8P4XcnBTXagt62eF6ta_Delilah_PrimaryLogo.png",
+  desc:"A glamorous 1920s-style supper club: elevated American comfort food with live music and late-night dancing till 2am.",
+  items:[["Chicken Tenders (signature)","$29",Y("delilah-west-hollywood")],["Macaroni Gratinée (truffle)","$24",Y("delilah-west-hollywood")],["Steak Tartare & Caviar","$42",Y("delilah-west-hollywood")]],
+  pros:["Glamorous Roaring-'20s vibe, live jazz & dancers","Famous chicken tenders & truffle mac get raves","Kind, knowledgeable servers"],
+  cons:["Overcrowded and overpriced","Band noise makes conversation hard","Service can be inconsistent; tough reservation"]},
+
+ {pick:1,name:"Steak 48",cuisine:"Steakhouse & seafood",cat:"Steak",area:"Beverly Hills",addr:"9680 Wilshire Blvd, Beverly Hills, CA 90212",lat:34.0668,lng:-118.4010,distMi:47,dist:"~47 mi · 50–75 min",
+  google:"4.6",googleN:"~900",yelp:"n/a",yelpN:"1,080",yelpUrl:"https://www.yelp.com/biz/steak-48-beverly-hills-4",
+  web:"https://www.steak48.com/steakhouses/beverly-hills/",menu:"https://www.steak48.com/steakhouses/beverly-hills/menus/",
+  img:"https://www.steak48.com/wp-content/uploads/2025/04/Bone-in-Ribeye-1.jpg",
+  desc:"A polished Mastro-family steakhouse — Prime & A5 Wagyu, seafood towers, and showy plates in a glossy Beverly Hills room.",
+  items:[["Chicken-Fried Lobster Tails","$56","https://www.yelp.com/menu/steak-48-beverly-hills-beverly-hills/item/chicken-fried-lobster-tails"],["Bone-In Ribeye, 22oz","$85","https://www.yelp.com/menu/steak-48-beverly-hills-beverly-hills/item/45-day-dry-aged-bone-in-ribeye"],["Filet Mignon, 12oz","$82",Y("steak-48-beverly-hills-4")]],
+  pros:["Best-in-LA steaks — filet & ribeye called phenomenal","Exceptional, personalized service","Warm upscale rooms with kitchen views"],
+  cons:["Very expensive — a splurge","Loud, busy dining room","Hard to get a prime-time reservation"]},
+
+ {pick:1,name:"Gwen",cuisine:"Steakhouse / fire dining",cat:"Steak",area:"Hollywood",addr:"6600 Sunset Blvd, Los Angeles, CA 90028",lat:34.0980,lng:-118.3320,distMi:47,dist:"~47 mi · 50–75 min",
+  google:"4.3",googleN:"~630",yelp:"~4.0*",yelpN:"1,000",yelpUrl:"https://www.yelp.com/biz/gwen-los-angeles-5",
+  web:"https://www.gwenla.com/",menu:"https://www.gwenla.com/s/Gwen-Dinner-53026.pdf",
+  img:"https://images.squarespace-cdn.com/content/v1/63ac789c878c39380d7fef53/a1170adc-ee2f-4f0e-a3c0-536a6f9cc2d1/img-home-restaurant-split.jpg",
+  desc:"Curtis Stone's Michelin-starred steakhouse & butcher shop — wood-fired meats around an open hearth in an Art Deco room.",
+  items:[["Grass-Fed Ribeye, 16oz","$95",Y("gwen-los-angeles-5")],["House-Made Charcuterie","$40",Y("gwen-los-angeles-5")],["Duck-Fat Potatoes","$15",Y("gwen-los-angeles-5")]],
+  pros:["Stunning Art Deco room w/ glass dry-aging cellars & fire pit","Steaks tender, cooked to perfect temp","Standout charcuterie & duck-fat potatoes"],
+  cons:["Very expensive; some question the Michelin star","Menu seen as safe / uncreative for the price","Duck-fat potatoes hit-or-miss"]},
+
+ {pick:1,name:"chi SPACCA",cuisine:"Italian meat house",cat:"Italian",area:"Hancock Park / Melrose",addr:"6610 Melrose Ave, Los Angeles, CA 90038",lat:34.0838,lng:-118.3322,distMi:43,dist:"~43 mi · 50–90 min",
+  google:"4.7",googleN:"~490",yelp:"~4.3*",yelpN:"799",yelpUrl:"https://www.yelp.com/biz/chi-spacca-los-angeles",
+  web:"https://www.chispacca.com/",menu:"https://www.chispacca.com/menus/",
+  img:"https://images.getbento.com/accounts/29fe2696792494e8634ccde4458b58f2/media/images/34733image.png",
+  desc:"Nancy Silverton's tiny, meat-obsessed Italian spot — giant dry-aged steaks and the fennel-pollen pork chop over open flame.",
+  items:[["Bistecca Fiorentina, 50oz (shares)","$295",Y("chi-spacca-los-angeles")],["Tomahawk Pork Chop","$145",Y("chi-spacca-los-angeles")],["Focaccia di Recco","$34",Y("chi-spacca-los-angeles")]],
+  pros:["Wood-fired tomahawk pork chop called best ever","Bistecca Fiorentina huge & flavorful, great shared","Gooey cheese-filled focaccia di Recco"],
+  cons:["Very expensive with steep wine markups","Cramped, tight seating","Long waits; hard reservations"]},
+
+ {pick:1,name:"Majordōmo",cuisine:"Korean-American (David Chang)",cat:"Asian",area:"Chinatown",addr:"1725 Naud St, Los Angeles, CA 90012",lat:34.0664,lng:-118.2360,distMi:43,dist:"~43 mi · 50–60 min",
+  google:"4.6",googleN:"~1,300",yelp:"~4.0*",yelpN:"1,757",yelpUrl:"https://www.yelp.com/biz/majordomo-los-angeles-2",
+  web:"https://www.momofuku.com/restaurants/majordomo",menu:"https://www.momofuku.com/restaurants/majordomo/menu",
+  img:"https://www.datocms-assets.com/146637/1745531049-horizontal-spread.jpg",
+  desc:"David Chang's sprawling see-and-be-seen flagship — Korean-American large-format feasts on a lively string-lit patio.",
+  items:[["Smoked Bo Ssäm (shares ~4)","$125",Y("majordomo-los-angeles-2")],["Whole-Plate Short Rib","$185",Y("majordomo-los-angeles-2")],["Mushroom Crispy Rice","$48",Y("majordomo-los-angeles-2")]],
+  pros:["Bo ssäm & tableside short rib worth every penny","Mushroom crispy rice an umami standout","Great for groups; generous portions & service"],
+  cons:["Large-format meats need pre-order + a big group","Pricey big-ticket family-style splurges","Less impressive for just two"]},
+
+ {pick:0,name:"République",cuisine:"French-California brasserie",cat:"French",area:"Mid-City (La Brea)",addr:"624 S La Brea Ave, Los Angeles, CA 90036",lat:34.0635,lng:-118.3442,distMi:45,dist:"~45 mi · 55–80 min",
+  google:"4.6",googleN:"~8,000",yelp:"4.3",yelpN:"~7,980",yelpUrl:"https://www.yelp.com/biz/republique-los-angeles-6",
+  web:"https://republiquela.com/",menu:"https://republiquela.com/restaurant/",
+  img:"https://republiquela.com/wp-content/uploads/2021/12/republique-back-dining-room-daytime.jpg",
+  desc:"The Manzkes' beloved French-Californian brasserie — pastry-forward cafe by day, upscale dinner by night, in a 1929 landmark.",
+  items:[["Dover Sole Meunière","$89",Y("republique-los-angeles-6")],["Duck Breast & Leg Confit","~$62",Y("republique-los-angeles-6")],["Bluefin Tuna Toast","~$28",Y("republique-los-angeles-6")]],
+  pros:["Dover sole deboned tableside — buttery perfection","Stunning 1929 space; pastries & brunch beloved","Consistently high food quality, accessible"],
+  cons:["No brunch reservations; long weekend lines","Loud & crowded at peak","Expensive; dinner service can be uneven"]},
+
+ {pick:0,name:"Gjelina",cuisine:"New American",cat:"American",area:"Venice (Abbot Kinney)",addr:"1429 Abbot Kinney Blvd, Venice, CA 90291",lat:33.9907,lng:-118.4659,distMi:50,dist:"~50 mi · 60–90 min",
+  google:"4.4",googleN:"~5,000",yelp:"4.0",yelpN:"~5,670",yelpUrl:"https://www.yelp.com/biz/gjelina-venice-2",
+  web:"https://www.gjelina.com",menu:"https://www.gjelina.com/los-angeles-menus/",
+  img:"https://images.getbento.com/accounts/45878c717a0379c3bf4a7f4912554929/media/images/21123Unsplash_brenna_lynn_22Vt7JIf7ZI.jpg",
+  desc:"An iconic Venice New American spot since 2008 — charred wood-fired pizzas, seasonal vegetable plates, house pastas.",
+  items:[["Saffron Spaghetti (bottarga)","$28",Y("gjelina-venice-2")],["Mixed Mushroom Pizza (truffle)","$27",Y("gjelina-venice-2")],["Crispy Duck Confit","$35",Y("gjelina-venice-2")]],
+  pros:["Best-in-city seasonal, vegetable-forward cooking","Thin, charred wood-fired pizzas","Saffron spaghetti with bottarga a standout"],
+  cons:["Pricey; 20% service fee & add-ons irk diners","Loud, packed, cramped tables","Service can feel cold"]},
+
+ {pick:0,name:"Ronan",cuisine:"Wood-fired Italian / pizza",cat:"Italian",area:"Melrose / Fairfax",addr:"7315 Melrose Ave, Los Angeles, CA 90046",lat:34.0838,lng:-118.3520,distMi:47,dist:"~47 mi · 55–80 min",
+  google:"4.5",googleN:"~900",yelp:"4.2",yelpN:"~469",yelpUrl:"https://www.yelp.com/biz/ronan-los-angeles",
+  web:"https://www.ronanla.com/",menu:"https://www.ronanla.com/",
+  img:"https://www.ronanla.com/uploads/sweet%20cheeks%20top%20view%20(1).jpg",
+  desc:"The Cutlers' seasonal share-plates spot — 100% sourdough Neapolitan-style pizzas and produce-driven plates; Michelin-recognized.",
+  items:[["Sweet Cheeks Pizza","$27",Y("ronan-los-angeles")],["Margherita Pizza","$23.50",Y("ronan-los-angeles")],["Half Jidori Chicken","$37.50",Y("ronan-los-angeles")]],
+  pros:["Playful Neapolitan pizzas; Margherita-with-burrata a pick","Sweet Cheeks (cacio e pepe honey) recommended","Easy casual vibe, friendly service"],
+  cons:["Plates are tapas-sized; order several","Pricey; not a budget spot","Room gets loud when busy"]},
+
+ {pick:0,name:"Super Peach",cuisine:"Korean-American (Momofuku)",cat:"Asian",area:"Century City",addr:"10250 Santa Monica Blvd, Ste 1025, Los Angeles, CA 90067",lat:34.0586,lng:-118.4185,distMi:48,dist:"~48 mi · 55–80 min",
+  google:"4.2",googleN:"~400",yelp:"~3.5*",yelpN:"216",yelpUrl:"https://www.yelp.com/biz/super-peach-los-angeles",
+  web:"https://www.momofuku.com/restaurants/super-peach",menu:"https://www.momofuku.com/restaurants/super-peach/menu",
+  img:"",
+  desc:"Momofuku's first LA flagship — American classics reimagined through Korean and Angeleno lenses, inside Westfield Century City.",
+  items:[["Lobster Noodles","$57",Y("super-peach-los-angeles")],["Australian Wagyu Kimbap","$27",Y("super-peach-los-angeles")],["Korean Fried Chicken Wings","~$22",Y("super-peach-los-angeles")]],
+  pros:["Kimbap fresh, well-seasoned, great dipping sauce","Fun crowd-pleasing menu + full bar; walk-ins seated","Two NYT stars blending Korean & Angeleno"],
+  cons:["Pricey for a mall spot ($50–60/pp)","Feels like a great mall restaurant, not a destination","Portions don't always justify cost"]},
+
+ {pick:0,name:"Harriet's Rooftop",cuisine:"American / rooftop lounge",cat:"American",area:"West Hollywood",addr:"8490 Sunset Blvd, West Hollywood, CA 90069",lat:34.0905,lng:-118.3782,distMi:50,dist:"~50 mi · 60–85 min",
+  google:"4.3",googleN:"~450",yelp:"3.5",yelpN:"513",yelpUrl:"https://www.yelp.com/biz/harriets-rooftop-west-hollywood",
+  web:"https://www.harrietsrooftop.com/",menu:"https://www.harrietsrooftop.com/menus/",
+  img:"https://www.1hotels.com/sites/default/files/2022-07/1H_WeHo_Harriets_Rooftop_0.jpg",
+  desc:"A trendy indoor-outdoor rooftop bar atop 1 Hotel — Asian-inspired shared plates, sushi and craft cocktails over Sunset Blvd.",
+  items:[["Skirt Steak Tataki","$39",Y("harriets-rooftop-west-hollywood")],["Poke Bowl","$32",Y("harriets-rooftop-west-hollywood")],["Creamy Rock Shrimp","$27",Y("harriets-rooftop-west-hollywood")]],
+  pros:["Jaw-dropping panoramic skyline views; romantic vibe","Welcoming, attentive service","Well-crafted cocktails & cozy lighting"],
+  cons:["Overpriced (e.g. $22 roll)","Small, sample-sized portions","Better for drinks/views than a filling dinner"]},
+
+ {pick:0,name:"La Dolce Vita",cuisine:"Classic Italian",cat:"Italian",area:"Beverly Hills",addr:"9785 Santa Monica Blvd, Beverly Hills, CA 90210",lat:34.0654,lng:-118.4126,distMi:45,dist:"~45 mi · 55–70 min",
+  google:"4.3",googleN:"~450",yelp:"3.8",yelpN:"171",yelpUrl:"https://www.yelp.com/biz/la-dolce-vita-beverly-hills-2",
+  web:"https://www.ladolcevitabeverlyhills.com/",menu:"https://www.allmenus.com/ca/beverly-hills/22194-la-dolce-vita-beverly-hills/menu/",
+  img:"https://images.squarespace-cdn.com/content/v1/622fa9c186c24a7ee2f87efd/a2100dc9-6f63-447d-8455-c1964c5a74d3/LDV-Crest-White.png",
+  desc:"A revived Beverly Hills landmark (opened 1966, Sinatra was an investor) serving Northern Italian-American classics.",
+  items:[["Steak Sinatra (filet)","$46",Y("la-dolce-vita-beverly-hills-2")],["Osso Buco","$39",Y("la-dolce-vita-beverly-hills-2")],["LDV Lasagna","$30",Y("la-dolce-vita-beverly-hills-2")]],
+  pros:["Elite, attentive service","Dark, romantic classic BH Italian with Hollywood history","Standout bread service & pastas"],
+  cons:["Extremely high-priced; value questioned","Mixed food reviews","Tiny windowless room can feel cramped"]},
+
+ {pick:0,name:"Loreto",cuisine:"Baja seafood / mariscos",cat:"Seafood",area:"Frogtown",addr:"1991 Blake Ave, Los Angeles, CA 90039",lat:34.1019,lng:-118.2569,distMi:40,dist:"~40 mi · 50–75 min",
+  google:"4.4",googleN:"~600",yelp:"~4.0*",yelpN:"~365",yelpUrl:"https://www.yelp.com/biz/loreto-los-angeles",
+  web:"https://loreto.la",menu:"https://loreto.la/menu",
+  img:"https://images.squarespace-cdn.com/content/v1/63be49b8a5549f414dfe426c/5b96f148-fbdb-461b-9b18-2ae47000bd17/Screenshot+2025-11-10+at+3.46.49+PM.png",
+  desc:"A splurge-worthy mariscos destination — ceviches, aguachiles and a shareable whole zarandeado-style grilled fish.",
+  items:[["Whole Grilled Fish (Pescado del Día)","$68",Y("loreto-los-angeles")],["Tonnato Ceviche (Beetello)","$23",Y("loreto-los-angeles")],["Margarita","$15–18",Y("loreto-los-angeles")]],
+  pros:["Vibrant ceviches & butterflied whole grilled fish","Warm romantic room, attentive staff, sleek bar","Standout cocktails & creative Baja flavors"],
+  cons:["Cocktails very overpriced; spendy overall","Service can be slow (2-hr meals)","Servers sometimes unsure of dishes"]},
+
+ {pick:0,name:"Amiga Amore",cuisine:"Italian (MexItalian)",cat:"Italian",area:"Highland Park",addr:"5668 York Blvd, Los Angeles, CA 90042",lat:34.1133,lng:-118.1899,distMi:47,dist:"~47 mi · 55–80 min",
+  google:"4.6",googleN:"~400",yelp:"4.2",yelpN:"298",yelpUrl:"https://www.yelp.com/biz/amiga-amore-los-angeles",
+  web:"https://www.amigaamorela.com/",menu:"https://www.amigaamorela.com/",
+  img:"",
+  desc:"A tiny Highland Park room from James Beard semifinalists — inventive housemade MexItalian pastas and small plates.",
+  items:[["Elote Agnolotti","~$26",Y("amiga-amore-los-angeles")],["Kampachi Aguachile","~$22",Y("amiga-amore-los-angeles")],["Sweet Potato Ceviche","~$18",Y("amiga-amore-los-angeles")]],
+  pros:["Inventive MexItalian made to share","Elote agnolotti & sweet potato ceviche creative & delicious","Soulful husband-and-wife neighborhood gem"],
+  cons:["Tiny room; cramped seating & long waits","Delicious but pricey for casual setting","A few pastas underwhelm vs standouts"]},
+
+ {pick:0,name:"Pasjoli",cuisine:"French bistro (Michelin)",cat:"French",area:"Santa Monica",addr:"2732 Main St, Santa Monica, CA 90405",lat:34.0009,lng:-118.4815,distMi:50,dist:"~50 mi · 60–90 min",
+  google:"4.4",googleN:"~450",yelp:"4.0",yelpN:"~510",yelpUrl:"https://www.yelp.com/biz/pasjoli-santa-monica",
+  web:"https://www.pasjoli.com",menu:"https://www.pasjoli.com/menu",
+  img:"https://images.squarespace-cdn.com/content/v1/5c480493da02bc7fba537b1f/b7d54c06-6961-4ac3-9549-cbd7fb3ac335/Pasjoli+Opening+Menu+-43.jpg",
+  desc:"Chef Dave Beran's one-Michelin-star French bistro, known for its showstopping tableside canard à la presse.",
+  items:[["Tableside Pressed Duck (for two)","$350",Y("pasjoli-santa-monica")],["Steak Frites","$53",Y("pasjoli-santa-monica")],["Chicken Liver Mousse","$22",Y("pasjoli-santa-monica")]],
+  pros:["Tableside pressed-duck theatrics with rich sauce","Silky chicken liver mousse on brioche","Steak frites au poivre so good"],
+  cons:["Very expensive for what's served","Recurring uneven-service complaints","Nonrefundable deposit & limited dining time"]},
+
+ {pick:0,name:"Dunsmoor",cuisine:"Open-hearth American",cat:"American",area:"Glassell Park",addr:"3501 Eagle Rock Blvd, Los Angeles, CA 90065",lat:34.1147,lng:-118.2186,distMi:45,dist:"~45 mi · 55–80 min",
+  google:"4.5",googleN:"~750",yelp:"4.3",yelpN:"630",yelpUrl:"https://www.yelp.com/biz/dunsmoor-los-angeles",
+  web:"https://dunsmoor.la/",menu:"https://dunsmoor.la/",
+  img:"https://images.squarespace-cdn.com/content/v1/63277280cddbdd67db3376fa/fb1129ab-5c79-45ef-abb1-9b443fbbae79/0S8A6417.jpg",
+  desc:"Chef Brian Dunsmoor's wood-fired ode to American heritage & Southern cooking — nearly everything over live fire.",
+  items:[["32oz Beef Ribeye (shares)","$149",Y("dunsmoor-los-angeles")],["Sour-Milk Cornbread","$19",Y("dunsmoor-los-angeles")],["Grilled Bandera Quail","$18",Y("dunsmoor-los-angeles")]],
+  pros:["Ribeye tremendously beefy, spot-on medium rare","Cornbread big, moist, crunchy crust","Cozy open-fire glow; inviting service"],
+  cons:["Pricey; 32oz ribeye is $149","Food heavy & rich, best split","Book weeks ahead for primetime"]},
+
+ {pick:0,name:"Camélia",cuisine:"French-Japanese bistro",cat:"French",area:"Arts District",addr:"1850 Industrial St, Los Angeles, CA 90021",lat:34.0388,lng:-118.2335,distMi:48,dist:"~48 mi · 55–80 min",
+  google:"4.3",googleN:"~260",yelp:"4.1",yelpN:"273",yelpUrl:"https://www.yelp.com/biz/camelia-los-angeles",
+  web:"https://cameliadtla.com/",menu:"https://cameliadtla.com/menus/",
+  img:"https://cameliadtla.com/wp-content/uploads/2024/06/camelia-menus-669x1024.jpg",
+  desc:"From the Tsubaki/Ototo team — a French bistro threaded with Japanese ingredients & sake; Bon Appétit Best New 2025.",
+  items:[["Chef's Set List (6 courses)","$115",Y("camelia-los-angeles")],["Duck Frites","~$42",Y("camelia-los-angeles")],["Uni & Otoro Toast","~$30",Y("camelia-los-angeles")]],
+  pros:["Sophisticated French-Japanese; koji chicken super juicy","Refined, sultry ambiance, friendly staff","High-energy upscale, great for occasions"],
+  cons:["Pricey; uni/otoro toast ~$30 for three pieces","Some plates run small","Better as a splurge than casual"]},
+
+ {pick:0,name:"Meteora",cuisine:"Live-fire tasting menu",cat:"Tasting",area:"Hollywood",addr:"6703 Melrose Ave, Los Angeles, CA 90038",lat:34.0838,lng:-118.3370,distMi:50,dist:"~50 mi · 60–85 min",
+  google:"4.5",googleN:"~550",yelp:"4.2",yelpN:"592",yelpUrl:"https://www.yelp.com/biz/meteora-los-angeles-2",
+  web:"https://meteora.la/",menu:"https://meteora.la/",
+  img:"https://meteora.la/wp-content/uploads/2022/09/meteora-crab.jpg",
+  desc:"Chef Jordan Kahn's one-Michelin-star restaurant built around live-fire, hearth and hot-stone cooking.",
+  items:[["6-course tasting menu","$165",Y("meteora-los-angeles-2")],["4-course tasting menu","$115",Y("meteora-los-angeles-2")],["Wine pairing","~$95",Y("meteora-los-angeles-2")]],
+  pros:["Stunning jungle-inspired room & bird's-nest entrance","Imaginative live-fire food unlike anything in LA","Duck course praised; Michelin-starred"],
+  cons:["Critics call dishes bland / underseasoned","$100+/pp steep for the flavor","Vague poetic menu; surprise service charges"]},
+
+ {pick:0,name:"Anajak Thai Cuisine",cuisine:"Thai (Michelin)",cat:"Asian",area:"Sherman Oaks",addr:"14704 Ventura Blvd, Sherman Oaks, CA 91403",lat:34.1514,lng:-118.4533,distMi:65,dist:"~65 mi · 1 hr 20 min",
+  google:"4.5",googleN:"~1,300",yelp:"3.7",yelpN:"1,210",yelpUrl:"https://www.yelp.com/biz/anajak-thai-sherman-oaks",
+  web:"https://www.anajakthai.com/",menu:"https://www.anajakthai.com/menu/",
+  img:"https://www.anajakthai.com/wp-content/uploads/2023/09/CarterHiyama_Anajak-114-scaled.jpg",
+  desc:"James Beard winner Justin Pichetrungsi reimagines his family's 40-year Thai restaurant; famed for Thai Taco Tuesday.",
+  items:[["Southern-Thai (Hat Yai) Fried Chicken","$39",Y("anajak-thai-sherman-oaks")],["Pineapple-Glaze Pork Ribs","$26",Y("anajak-thai-sherman-oaks")],["Mango Sticky Rice (seasonal)","$19",Y("anajak-thai-sherman-oaks")]],
+  pros:["Hat Yai fried chicken crispy, juicy must-order","Among LA's best; regulars cite years of great meals","Excellent natural wine list & welcoming staff"],
+  cons:["Books out a week+; Taco Tuesday ~1hr waits","Pricey for Thai; high per-head on tasting nights","Some find the hyped chicken less special"]},
+
+ {pick:0,name:"Petit Trois Le Valley",cuisine:"French bistro",cat:"French",area:"Sherman Oaks",addr:"13705 Ventura Blvd, Sherman Oaks, CA 91423",lat:34.1556,lng:-118.4255,distMi:64,dist:"~64 mi · 1 hr 20 min",
+  google:"4.3",googleN:"~1,800",yelp:"3.6",yelpN:"1,376",yelpUrl:"https://www.yelp.com/biz/petit-trois-sherman-oaks-2",
+  web:"https://www.petittrois.com/levalley",menu:"https://www.petittrois.com/levalley",
+  img:"https://images.squarespace-cdn.com/content/v1/6418a1976f1b3b6d80d3ebca/a4d13397-98b9-4404-89c8-bb217f5bc3c7/PT_LeValley-203.jpg",
+  desc:"Chef Ludo Lefebvre's larger Valley bistro — Parisian classics like escargots, steak frites and the famed Le Big Mec.",
+  items:[["Le Big Mec (burger)","~$30",Y("petit-trois-sherman-oaks-2")],["Steak Frites","~$42",Y("petit-trois-sherman-oaks-2")],["Omelette Petit Trois","~$24",Y("petit-trois-sherman-oaks-2")]],
+  pros:["Le Big Mec among LA's best burgers — bordelaise & bone marrow","Custardy Boursin-chive omelette legendary","Chic spacious Parisian-bistro, great martinis"],
+  cons:["Service can be slow / corporate","Expensive for the portions","Inconsistent execution; Big Mec divides opinion"]},
+
+ {pick:0,name:"Xuntos",cuisine:"Spanish tapas",cat:"Spanish",area:"Santa Monica",addr:"516 Santa Monica Blvd, Santa Monica, CA 90401",lat:34.0173,lng:-118.4954,distMi:50,dist:"~50 mi · 60–85 min",
+  google:"4.2",googleN:"~200",yelp:"~4.0*",yelpN:"152",yelpUrl:"https://www.yelp.com/biz/xuntos-santa-monica-santa-monica",
+  web:"https://www.barxuntos.com/",menu:"https://www.barxuntos.com/menus",
+  img:"https://images.squarespace-cdn.com/content/v1/642f5f80f5a610000e065177/408ee9a5-6ab7-4361-baf4-5add77f0f68f/Xuntos05779.jpg",
+  desc:"Chef Sandra Cordero's Galician-rooted tapas bar — pintxos, jamón ibérico, Galician empanadas and Spanish seafood.",
+  items:[["Gambas al Ajillo","$32",Y("xuntos-santa-monica-santa-monica")],["Tortilla Española","$23",Y("xuntos-santa-monica-santa-monica")],["Croquetas de Jamón (4)","$14",Y("xuntos-santa-monica-santa-monica")]],
+  pros:["Arguably LA's best tapas; tortilla & gambas standouts","Beautiful 1926 Art Deco space","Deep Spanish wine / vermouth / sherry list (200+)"],
+  cons:["Small portions for the price","~3x Spain prices; adds up fast","Some dishes uneven"]},
+
+ {pick:0,name:"Vespertine",cuisine:"Avant-garde tasting (2★)",cat:"Tasting",area:"Culver City",addr:"3599 Hayden Ave, Culver City, CA 90232",lat:34.0264,lng:-118.3735,distMi:42,dist:"~42 mi · 50–70 min",
+  google:"4.2",googleN:"~350",yelp:"~4.0*",yelpN:"407",yelpUrl:"https://www.yelp.com/biz/vespertine-culver-city",
+  web:"https://www.vespertine.la/",menu:"https://www.exploretock.com/vespertine/",
+  img:"https://upload.wikimedia.org/wikipedia/commons/0/03/Vespertine_-_Eric_Owen_Moss.jpg",
+  desc:"Jordan Kahn's two-Michelin-star avant-garde tasting-menu restaurant inside Eric Owen Moss's striking architecture.",
+  items:[["Tasting menu (per person)","$260",Y("vespertine-culver-city")],["+ tax & 20% service","extra",Y("vespertine-culver-city")]],
+  pros:["Immersive dramatic architecture & multi-sensory experience","Visually stunning, daringly inventive plating","Attentive, choreographed service"],
+  cons:["Extremely expensive (~$1,000 for two all-in)","Style-over-substance; food called repetitive","Atmosphere can feel cold / pretentious"]},
+
+ {pick:0,name:"Mélisse",cuisine:"French tasting (2★)",cat:"Tasting",area:"Santa Monica",addr:"1104 Wilshire Blvd, Santa Monica, CA 90401",lat:34.0203,lng:-118.4912,distMi:55,dist:"~55 mi · 1 hr 15 min",
+  google:"4.5",googleN:"~600",yelp:"4.2",yelpN:"1,417",yelpUrl:"https://www.yelp.com/biz/m%C3%A9lisse-santa-monica-3",
+  web:"https://www.citrinandmelisse.com/",menu:"https://www.citrinandmelisse.com/melissemenu",
+  img:"",
+  desc:"Chef Josiah Citrin's revived two-Michelin-star Mélisse — a multi-course French tasting over ~2.5 hours, 14 seats.",
+  items:[["French tasting menu (per person)","$399",Y("m%C3%A9lisse-santa-monica-3")]],
+  pros:["Refined, decadent French technique & luxe ingredients","Gorgeous presentations & tableside saucing","Impeccable service, intimate 14-seat room"],
+  cons:["Very expensive (~$400/pp); wine marked up","Strict no-cancellation policy + hold fee","Occasional service missteps"]},
+
+ {pick:0,name:"Somni",cuisine:"Modernist Spanish (3★)",cat:"Tasting",area:"West Hollywood",addr:"9045 Nemo St, West Hollywood, CA 90069",lat:34.0838,lng:-118.3865,distMi:47,dist:"~47 mi · 55–75 min",
+  google:"4.7",googleN:"~120",yelp:"~4.5*",yelpN:"49",yelpUrl:"https://www.yelp.com/biz/somni-west-hollywood-2",
+  web:"https://www.somnirestaurant.com/",menu:"https://www.somnirestaurant.com/",
+  img:"https://s3.us-west-1.amazonaws.com/somni-manager.dallonses.com/images/QSC8QpWbCMIjBcq1vS84obJjRveS7pnfFIGH1bct-wlazy-qlazy.jpg",
+  desc:"Chef Aitor Zabala's three-Michelin-star (2025) modernist Spanish counter — LA's most expensive tasting menu, 14 seats.",
+  items:[["Tasting menu (per person)","$645",Y("somni-west-hollywood-2")],["Califia wine pairing","$415",Y("somni-west-hollywood-2")],["Arrels wine pairing","$225",Y("somni-west-hollywood-2")]],
+  pros:["Uniformly beautiful presentations, exceptional even for 3-star","Inventive modernist Spanish dishes","Technique-driven yet restrained, not showy"],
+  cons:["LA's most expensive tasting ($645/pp)","Value complaints; some felt closer to 1 star","Flavors sometimes too restrained / salty"]}
+];
+R.forEach((r,i)=>r.rank=i+1);
+
+const dirLink=a=>"https://www.google.com/maps/dir/Irvine,+CA/"+encodeURIComponent(a);
+const gUrl=r=>"https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(r.name+" "+r.addr);
+const priceNum=r=>{const m=(r.items[0][1].match(/\d+/));return m?+m[0]:0;};
+// dish-specific photos: keep exact Yelp menu-item links, else image-search that dish
+const dishPic=(r,it)=> (it[2]&&it[2].includes('/menu/'))
+  ? it[2]
+  : "https://www.google.com/search?tbm=isch&q="+encodeURIComponent(r.name+" "+it[0]);
+
+let state={filter:"all",sort:"vibe"};
+
+/* ---- FILTER BUTTONS ---- */
+const cats=[...new Set(R.map(r=>r.cat))].sort();
+const fwrap=document.getElementById('filters');
+const fbtns=[["all","All 24"],["pick","★ Your vibe"],...cats.map(c=>[ "cat:"+c, c])];
+fwrap.innerHTML=fbtns.map(([v,l],i)=>
+  `<button class="chip filt ${v==='pick'?'vibe':''} ${i===0?'active':''}" data-filter="${v}">${l}</button>`).join(' ');
+
+/* ---- RENDER ---- */
+const listEl=document.getElementById('list'), countEl=document.getElementById('count');
+function passes(r){
+  if(state.filter==="all")return true;
+  if(state.filter==="pick")return r.pick;
+  if(state.filter.startsWith("cat:"))return r.cat===state.filter.slice(4);
+  return true;
+}
+function sorter(a,b){
+  if(state.sort==="vibe")return (b.pick-a.pick)||(a.rank-b.rank);
+  if(state.sort==="rating")return (parseFloat(b.google)||0)-(parseFloat(a.google)||0);
+  if(state.sort==="dist")return a.distMi-b.distMi;
+  if(state.sort==="priceA")return priceNum(a)-priceNum(b);
+  if(state.sort==="priceD")return priceNum(b)-priceNum(a);
+  return 0;
+}
+function cardHTML(r){
+  const items=r.items.map(it=>`
+    <a class="item" href="${dishPic(r,it)}" target="_blank" rel="noopener" title="See photos of this dish">
+      <span class="iname"><span class="cam">📷</span>${it[0]}</span><span class="ip">${it[1]}</span></a>`).join('');
+  const pros=r.pros.map(p=>`<li>${p}</li>`).join('');
+  const cons=r.cons.map(c=>`<li>${c}</li>`).join('');
+  const thumb=r.img?`<img src="${r.img}" alt="${r.name}" loading="lazy" onerror="this.style.display='none'">`:'';
+  return `<div class="rcard" id="card-${r.rank}" data-rank="${r.rank}">
+    <div class="rhead">
+      <div class="thumb"><div class="fb">${r.name}</div>${thumb}<span class="num">${r.rank}</span></div>
+      <div class="rmain">
+        <div class="rname">${r.name}${r.pick?'<span class="vibebadge">★ YOUR VIBE</span>':''}</div>
+        <div class="rcuis"><span class="cat">${r.cat}</span>${r.cuisine} · ${r.area}</div>
+        <div class="ratings">
+          <a class="rat" href="${gUrl(r)}" target="_blank" rel="noopener"><span class="g">Google ★ ${r.google}</span>${r.googleN?` (${r.googleN})`:''} <span class="ext">↗</span></a>
+          <a class="rat" href="${r.yelpUrl}" target="_blank" rel="noopener"><span class="y">Yelp ★ ${r.yelp}</span> (${r.yelpN}) <span class="ext">↗</span></a>
+        </div>
+        <div class="rdist">🚗 ${r.dist} from Irvine</div>
+      </div>
+    </div>
+    <div class="rbody">
+      <p class="desc">${r.desc}</p>
+      <div class="items">${items}</div>
+      <div class="seeyelp">📷 Tap a dish to see photos of that specific dish</div>
+      <div class="pc">
+        <div class="box pros"><h5>👍 Pros</h5><ul>${pros}</ul></div>
+        <div class="box cons"><h5>👎 Cons</h5><ul>${cons}</ul></div>
+      </div>
+      <div class="links">
+        <a href="${r.web}" target="_blank" rel="noopener">Website</a>
+        <a href="${r.menu}" target="_blank" rel="noopener">Menu</a>
+        <a href="${r.yelpUrl}" target="_blank" rel="noopener">Yelp</a>
+        <a class="dir" href="${dirLink(r.addr)}" target="_blank" rel="noopener">Directions</a>
+      </div>
+    </div>
+  </div>`;
+}
+
+/* ---- MAP ---- */
+const map=L.map('map',{scrollWheelZoom:true}).setView([34.05,-118.33],10);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'© OpenStreetMap'}).addTo(map);
+const pinIcon=(n,c)=>L.divIcon({className:'',html:
+  `<div style="background:${c};color:#fff;min-width:24px;height:24px;padding:0 4px;border-radius:50% 50% 50% 0;
+   transform:rotate(-45deg);display:flex;align-items:center;justify-content:center;
+   box-shadow:0 2px 5px rgba(0,0,0,.4);border:2px solid #fff;font-weight:800;font-size:10.5px">
+   <span style="transform:rotate(45deg)">${n}</span></div>`,iconSize:[24,24],iconAnchor:[12,24]});
+L.marker([IRVINE.lat,IRVINE.lng],{icon:L.divIcon({className:'',html:
+  `<div style="background:#16a34a;color:#fff;width:28px;height:28px;border-radius:50% 50% 50% 0;
+   transform:rotate(-45deg);display:flex;align-items:center;justify-content:center;border:2px solid #fff;
+   box-shadow:0 2px 5px rgba(0,0,0,.4)"><span style="transform:rotate(45deg)">🏠</span></div>`,iconSize:[28,28],iconAnchor:[14,28]})})
+  .addTo(map).bindPopup(`<b>${IRVINE.name}</b> — home base`);
+const markerLayer=L.layerGroup().addTo(map);
+const markers={};
+
+function render(){
+  const list=R.filter(passes).sort(sorter);
+  listEl.innerHTML=list.map(cardHTML).join('');
+  countEl.textContent=`Showing ${list.length} of 24 restaurants`;
+  markerLayer.clearLayers(); for(const k in markers)delete markers[k];
+  const pts=[[IRVINE.lat,IRVINE.lng]];
+  list.forEach(r=>{
+    const m=L.marker([r.lat,r.lng],{icon:pinIcon(r.rank,r.pick?'#d99a2b':'#c0182b')})
+      .bindPopup(`<b>#${r.rank} ${r.name}</b>${r.pick?' ⭐':''}<br>${r.cuisine} · ${r.area}<br>
+        ★ Google ${r.google} · Yelp ${r.yelp}<br>🚗 ${r.dist}<br>
+        <a href="#card-${r.rank}" onclick="flash(${r.rank})">See details ↓</a> ·
+        <a href="${dirLink(r.addr)}" target="_blank">Directions →</a>`);
+    m.addTo(markerLayer); markers[r.rank]=m; pts.push([r.lat,r.lng]);
+  });
+  if(pts.length>1)map.fitBounds(pts,{padding:[40,40]});
+  bindCards();
+}
+function flash(rank){
+  const c=document.getElementById('card-'+rank); if(!c)return;
+  c.classList.add('flash'); setTimeout(()=>c.classList.remove('flash'),1400);
+}
+window.flash=flash;
+function bindCards(){
+  document.querySelectorAll('.rcard').forEach(c=>{
+    c.addEventListener('click',e=>{
+      if(e.target.closest('a'))return;
+      const r=+c.dataset.rank, m=markers[r];
+      if(m){map.setView(m.getLatLng(),13,{animate:true}); m.openPopup();
+        if(window.innerWidth<=900)document.getElementById('map').scrollIntoView({behavior:'smooth',block:'center'});}
+    });
+  });
+}
+
+/* ---- CONTROLS ---- */
+document.addEventListener('click',e=>{
+  const f=e.target.closest('.filt'), s=e.target.closest('.sort'), v=e.target.closest('.view');
+  if(f){document.querySelectorAll('.filt').forEach(x=>x.classList.remove('active'));f.classList.add('active');state.filter=f.dataset.filter;render();}
+  if(s){document.querySelectorAll('.sort').forEach(x=>x.classList.remove('active'));s.classList.add('active');state.sort=s.dataset.sort;render();}
+  if(v){document.querySelectorAll('.view').forEach(x=>x.classList.remove('active'));v.classList.add('active');
+    const grid=v.dataset.view==='grid';
+    document.getElementById('app').classList.toggle('gridview',grid);
+    if(!grid)setTimeout(()=>map.invalidateSize(),60);}
+});
+
+render();
+</script>
+</body>
+</html>
