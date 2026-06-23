@@ -764,7 +764,7 @@ function cardHTML(r){
 
 /* ---- MAP ---- */
 const map=L.map('map',{scrollWheelZoom:true}).setView([34.05,-118.33],10);
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'© OpenStreetMap'}).addTo(map);
+L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',{maxZoom:20,subdomains:'abcd',attribution:'© OpenStreetMap © CARTO'}).addTo(map);
 const pinIcon=(n,c)=>L.divIcon({className:'',html:
   `<div style="background:${c};color:#fff;min-width:24px;height:24px;padding:0 4px;border-radius:50% 50% 50% 0;
    transform:rotate(-45deg);display:flex;align-items:center;justify-content:center;
