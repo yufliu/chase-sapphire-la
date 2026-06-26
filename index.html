@@ -136,14 +136,14 @@
 <div class="wrap">
 
   <header class="hero">
-    <span class="badge">CHASE SAPPHIRE RESERVE · EXCLUSIVE TABLES · CALIFORNIA</span>
+    <span class="badge">CHASE SAPPHIRE RESERVE · EXCLUSIVE TABLES · CA · FL · GA</span>
     <h1>RestaurantMaxxer <span class="light">— Sapphire Reserve Exclusive Tables</span></h1>
-    <p>Every Exclusive Tables restaurant across <b>4 California cities</b>, quality-checked. Use the <b>City</b> dropdown to switch the list &amp; map. Filter, sort, and tap pins on the live map; every Google/Yelp rating opens its real reviews page and each dish links to photos of that dish. In LA, 6 gold <b>★</b> picks match a lively/trendy vibe.</p>
+    <p>Every Exclusive Tables restaurant across <b>8 cities</b> in California, Florida &amp; Georgia, quality-checked. Use the <b>City</b> dropdown to switch the list &amp; map. Tap any Google/Yelp rating for live reviews and each dish for photos; 🟢/🔴 shows Open/Closed in each city's local time. Irvine drive times &amp; the 6 gold <b>★</b> vibe picks apply to Los Angeles only.</p>
     <div class="stat">
-      <div><b>4</b><span>CITIES</span></div>
-      <div><b>59</b><span>TABLES TOTAL</span></div>
+      <div><b>8</b><span>CITIES</span></div>
+      <div><b>88</b><span>TABLES TOTAL</span></div>
       <div><b>$150</b><span>CREDIT (H1 2026)</span></div>
-      <div><b>LA·SD·Carlsbad</b><span>DRIVE · SF = FLY</span></div>
+      <div><b>CA · FL · GA</b><span>3 STATES</span></div>
     </div>
   </header>
 
@@ -155,10 +155,20 @@
     <div class="row" style="margin-bottom:8px">
       <span class="lbl">City</span>
       <select id="citysel" class="citysel">
-        <option value="la">📍 Los Angeles — 24 tables</option>
-        <option value="sd">📍 San Diego — 15 tables</option>
-        <option value="carlsbad">📍 Carlsbad / North County — 4 tables</option>
-        <option value="sf">📍 San Francisco — 16 tables</option>
+        <optgroup label="California">
+          <option value="la">📍 Los Angeles — 24</option>
+          <option value="sd">📍 San Diego — 15</option>
+          <option value="carlsbad">📍 Carlsbad / North County — 4</option>
+          <option value="sf">📍 San Francisco — 16</option>
+        </optgroup>
+        <optgroup label="Florida">
+          <option value="tampa">📍 Tampa Bay — 4</option>
+          <option value="miami">📍 Miami — 14</option>
+          <option value="orlando">📍 Orlando — 2</option>
+        </optgroup>
+        <optgroup label="Georgia">
+          <option value="atlanta">📍 Atlanta — 9</option>
+        </optgroup>
       </select>
     </div>
     <div class="row" style="margin-bottom:8px">
@@ -167,9 +177,9 @@
     </div>
     <div class="row">
       <span class="lbl">Sort</span>
-      <button class="chip sort active" data-sort="vibe">★ Vibe first</button>
+      <button class="chip sort active" id="sort-vibe" data-sort="vibe">★ Vibe first</button>
       <button class="chip sort" data-sort="rating">Top rated</button>
-      <button class="chip sort" data-sort="dist">Closest to Irvine</button>
+      <button class="chip sort" id="sort-dist" data-sort="dist">Closest to Irvine</button>
       <button class="chip sort" data-sort="priceA">$ Low→High</button>
       <button class="chip sort" data-sort="priceD">$ High→Low</button>
     </div>
@@ -183,7 +193,7 @@
   <div class="app" id="app">
     <div>
       <div class="count" id="count"></div>
-      <div class="badgekey">🟢 <b>Open</b> / 🔴 <span class="x">Closed</span> = live, Pacific time · ✓ Verified / ? Unverified / ✗ Denied = $300 dining-credit status from <a href="https://csr-dining.edgerunners.cloud/" target="_blank" rel="noopener">csr-dining.edgerunners.cloud</a> · 🎁 = gift-card link (a known way to trigger the credit)</div>
+      <div class="badgekey">🟢 <b>Open</b> / 🔴 <span class="x">Closed</span> = live, each city's local time · ✓ Verified / ? Unverified / ✗ Denied = $300 dining-credit status from <a href="https://csr-dining.edgerunners.cloud/" target="_blank" rel="noopener">csr-dining.edgerunners.cloud</a> · 🎁 = gift-card link (a known way to trigger the credit)</div>
       <div class="list" id="list"></div>
     </div>
     <aside class="mapcol">
@@ -195,6 +205,11 @@
   <div class="qc">
     <h3>✅ Quality-check notes (corrections the research surfaced)</h3>
     <ul>
+      <li><b>Tampa · Miami · Orlando · Atlanta (newest):</b> Open/Closed for these uses <b>Eastern time</b>; CA cities use Pacific. Irvine distance &amp; vibe picks are LA-only.</li>
+      <li><b>Norman's (Orlando)</b> closed at the Ritz-Carlton Grande Lakes (Sept 2025) — relisted at chef Van Aken's new independent spot, <b>7924 Via Dellagio Way</b>; confirm Exclusive Tables status before booking.</li>
+      <li><b>The Alden (Atlanta)</b> is <b>temporarily closed</b> after a May 2026 building fire (no reopen date); address corrected to <b>5070 Peachtree Blvd, Chamblee</b>.</li>
+      <li><b>Atlanta address fixes:</b> Lazy Betty → 999 Peachtree St NE (relocated); Mujō → 691 14th St NW; Yebo Beach Haus → 56 E Andrews Dr NW.</li>
+      <li><b>The Den (Miami)</b> is inside <b>Azabu Miami Beach</b> (Stanton Hotel), not the Sagamore; <b>Krüs Kitchen</b> &amp; <b>Los Félix</b> share 3413 Main Hwy (Krüs upstairs).</li>
       <li><b>SF · San Diego · Carlsbad (new):</b> <b>Che Fico</b> (SF) is flagged <b>temporarily closed</b> (merging with Che Fico Alimentari) — verify before booking.</li>
       <li><b>Address fixes:</b> <b>Little Shucker</b> → 2016 Fillmore St (not Union St); <b>Saison Cellar &amp; Wine Bar</b> → 234 Townsend St; <b>The Marine Room</b> → 1950 Spindrift Dr; <b>Coasterra</b> → 880 <b>B</b> Harbor Island Dr.</li>
       <li><b>O' by Claude Le Tohic</b> = <b>1</b> Michelin star (not 2); <b>Gary Danko</b> lost its star in 2024; <b>Juniper &amp; Ivy</b>'s founder Richard Blais is no longer the day-to-day chef (now Alex Penkin).</li>
@@ -218,7 +233,7 @@
     <a href="https://www.opentable.com/c/chasedining/" target="_blank" rel="noopener">Chase Dining page</a>,
     book an Exclusive Table, dine, and pay with the Reserve — up to $150 posts back as a statement credit (per half-year, max $300/yr).
     Full list: <a href="https://www.opentable.com/sapphire-reserve/los-angeles" target="_blank" rel="noopener">OpenTable · Sapphire Reserve · Los Angeles</a>.
-    <div class="foot-note">Built Jun 18 2026 · ratings, prices &amp; review sentiment gathered from official sites, Google, Yelp &amp; OpenTable and may shift — confirm on the restaurant’s page when booking. Pros/cons distilled from real customer reviews. Open/Closed is computed live in your browser from each restaurant's posted hours (Pacific time) — double-check before driving. The ✓/?/✗ dining-credit status and 🎁 gift-card links are community-sourced from <a href="https://csr-dining.edgerunners.cloud/" target="_blank" rel="noopener">csr-dining.edgerunners.cloud</a> (a few gift links route through an affiliated/parent Toast account) — not official Chase data.</div>
+    <div class="foot-note">Built Jun 18 2026 · ratings, prices &amp; review sentiment gathered from official sites, Google, Yelp &amp; OpenTable and may shift — confirm on the restaurant’s page when booking. Pros/cons distilled from real customer reviews. Open/Closed is computed live in your browser from each restaurant's posted hours (in that city's local time zone) — double-check before going. The ✓/?/✗ dining-credit status and 🎁 gift-card links are community-sourced from <a href="https://csr-dining.edgerunners.cloud/" target="_blank" rel="noopener">csr-dining.edgerunners.cloud</a> (a few gift links route through an affiliated/parent Toast account) — not official Chase data.</div>
   </footer>
 </div>
 
@@ -695,11 +710,284 @@ const CB=[
   cons:["Inconsistent service","Some find it overpriced","Auto-park-way location lacks charm"]}
 ];
 
+const TAMPA=[
+ {pick:0,name:"Psomi",cuisine:"Modern Greek bistro & bakery",cat:"Mediterranean",area:"West Tampa",addr:"701 N Howard Ave, Tampa, FL 33606",lat:27.9503,lng:-82.4827,
+  google:"4.5",googleN:"~1,400",yelp:"4.5",yelpN:"~817",yelpUrl:"https://www.yelp.com/biz/psomi-tampa",web:"https://www.eatpsomi.com/",menu:"https://www.eatpsomi.com/menus/",
+  img:"https://images.getbento.com/accounts/7f9ecd7c8984523294bcb9082d29b634/media/images/young_chef_michelin_3.jpg",
+  hours:"Wed–Sun 8am–3pm · Closed Mon–Tue",
+  desc:"Daytime Greek eatery & bakery from chef Christina Theofilos — fresh-baked breads and modern Greek dishes; Michelin Bib Gourmand.",
+  items:[["Grilled Octopus Horiatiki","$30"],["Lamb Pita","$26"],["Pork Gyro","$24"]],
+  pros:["Fresh-baked breads & pastries","Generous, high-quality Greek food","Bright, airy room + patio"],
+  cons:["Valet-only parking is tough","Popular items sell out","Pricey & loud when busy"]},
+
+ {pick:0,name:"Predalina",cuisine:"Coastal Mediterranean & seafood",cat:"Mediterranean",area:"Water Street, Tampa",addr:"1001 E Cumberland Ave, Tampa, FL 33602",lat:27.9449,lng:-82.4497,
+  google:"4.2",googleN:"~820",yelp:"~4.0*",yelpN:"~402",yelpUrl:"https://www.yelp.com/biz/predalina-tampa-2",web:"https://predalina.com/",menu:"https://predalina.com/pages/menus",
+  img:"https://cdn.shopify.com/s/files/1/0750/2381/0865/files/predalina_women_illustration_maroon.png?v=1764023232",
+  hours:"Mon–Wed 3–11pm · Thu 3pm–12am · Fri 3pm–1am · Sat 10:30am–1am · Sun 10:30am–10pm",
+  desc:"Upscale seafood-driven Mediterranean on Water Street — vibrant room, two patios, raw bar and in-house retail.",
+  items:[["Blue Crab Chitarra","$40"],["Branzino","$36"],["Lamb Chops","$24"]],
+  pros:["Attentive, polished service","Stunning, intimate ambiance","Standout skewers & sides"],
+  cons:["Portions small for the price","Limited wine selection at times","Seating inconsistent despite reso"]},
+
+ {pick:0,name:"Fortu",cuisine:"Contemporary Asian / wagyu",cat:"Asian",area:"Downtown St. Petersburg",addr:"97 Central Ave, St. Petersburg, FL 33701",lat:27.7714,lng:-82.6336,
+  google:"4.7",googleN:"~1,200",yelp:"~4.5*",yelpN:"~250",yelpUrl:"https://www.yelp.com/biz/fortu-st-petersburg",web:"https://www.forturestaurants.com/",menu:"https://www.forturestaurants.com/menus/",
+  img:"https://images.getbento.com/accounts/61713c7d96db96e74b5231ce09761f4b/media/images/3750087838fortu.png",
+  hours:"Tue–Thu 5–9pm · Fri–Sat 5–10pm · Sun 5–9pm · Closed Mon",
+  desc:"Michelin-recommended Japanese-inspired modern Asian & wagyu steakhouse in a sleek, amber-lit St. Pete room.",
+  items:[["Wagyu Gyoza","$19"],["Miso Black Cod","$46"],["Koji-aged Wagyu Ribeye 14oz","$90"]],
+  pros:["Outstanding, attentive service","Standout dumplings & black cod","Sleek, intimate date-night vibe"],
+  cons:["Expensive (wagyu $90)","Occasional dish inconsistency","Book 1–2 days ahead"]},
+
+ {pick:0,name:"Il Ritorno",cuisine:"Inventive fine-dining Italian",cat:"Italian",area:"Downtown St. Petersburg",addr:"449 Central Ave, St. Petersburg, FL 33701",lat:27.7715,lng:-82.6395,
+  google:"4.5",googleN:"~890",yelp:"~4.0*",yelpN:"~429",yelpUrl:"https://www.yelp.com/biz/il-ritorno-st-petersburg",web:"https://www.ilritornodowntown.com/",menu:"https://www.ilritornodowntown.com/menu",
+  img:"https://images.squarespace-cdn.com/content/v1/5b1aad7c266c07e197171471/1529097802742-47E68SL68NKX9KKTSUN4/Il+Ritorno-109+chef.jpg",
+  hours:"Sun–Thu 5–9:30pm · Fri–Sat 5–10:30pm",
+  desc:"Inventive fine-dining Italian from chef David Benstock — handmade pastas, a butcher shop, and a chef's-counter tasting; Michelin Guide.",
+  items:[["Grand Tasting (pp)","$250"],["Short Rib Mezzaluna","mkt"],["Lobster Tortellini","mkt"]],
+  pros:["Exceptional creative pastas","Whimsical, inventive plating","High-quality butcher ingredients"],
+  cons:["Small protein portions on mains","Uneven service pacing","À la carte prices not posted"]}
+];
+
+const MIAMI=[
+ {pick:0,name:"Zitz Sum",cuisine:"Modern Chinese / dim sum",cat:"Asian",area:"Coral Gables",addr:"396 Alhambra Circle, Coral Gables, FL 33134",lat:25.7514,lng:-80.2622,
+  google:"4.6",googleN:"219",yelp:"4.5",yelpN:"276",yelpUrl:"https://www.yelp.com/biz/zitz-sum-coral-gables",web:"https://www.zitzsum.com/",menu:"https://www.zitzsum.com/s/website-menu.pdf",
+  img:"https://images.squarespace-cdn.com/content/v1/5ebaf6713b28f6376273016e/5324ce18-6f29-414d-991f-cb59d0c6a39c/IMG_9305.jpg?format=1500w",
+  hours:"Tue–Thu 6–9:30pm · Fri–Sat 6–10pm · Closed Sun–Mon",
+  desc:"Chef Pablo Zitzmann's intimate 30-seat modern Chinese/dim-sum spot with Japanese & Latin touches; Michelin Bib Gourmand.",
+  items:[["Wonton in Brodo","$21"],["Bing Bread","$16"],["HK-Style French Toast","$16"]],
+  pros:["Inventive, beautifully plated fusion","Warm service, intimate setting","Bib Gourmand value"],
+  cons:["Small wine list","Hard to find / tough parking","Closed Sun–Mon; small portions"]},
+
+ {pick:0,name:"Luca Osteria",cuisine:"Modern Italian",cat:"Italian",area:"Coral Gables",addr:"116 Giralda Ave, Coral Gables, FL 33134",lat:25.7513,lng:-80.2572,
+  google:"4.6",googleN:"246",yelp:"4.5",yelpN:"492",yelpUrl:"https://www.yelp.com/biz/luca-osteria-coral-gables",web:"https://lucamiami.com/",menu:"https://lucamiami.com/wp-content/uploads/2026/03/LUCA-DINNER-MENU-2026-MARCH-.pdf",
+  img:"https://lucamiami.com/wp-content/uploads/2025/12/DRO16316-600x550.jpg",
+  hours:"Sun & Tue–Thu 5:30–10pm · Fri–Sat 5:30–11pm · Closed Mon",
+  desc:"Chef Giorgio Rapicavoli's lively Giralda-plaza osteria — house-made pasta and modern Italian; Miami New Times Best Italian 2024.",
+  items:[["Pasta al Limone","$36"],["Short Rib Bolognese","$39"],["Truffle Patate Fritte","$33"]],
+  pros:["House-made pasta consistently praised","Lively plaza patio, charming","Attentive service, award-winning"],
+  cons:["Pricey for portion sizes","Loud & tight on weekends","Hard reservation; auto-grat 6+"]},
+
+ {pick:0,name:"Eating House",cuisine:"Eclectic modern American",cat:"American",area:"Coral Gables",addr:"128 Giralda Ave, Coral Gables, FL 33134",lat:25.7513,lng:-80.2574,
+  google:"4.5",googleN:"893",yelp:"4.5",yelpN:"267",yelpUrl:"https://www.yelp.com/biz/eating-house-miami-2",web:"https://eatinghousemiami.com/",menu:"https://eatinghousemiami.com/wp-content/uploads/EHMARCH26_DINNERMENU_8.5X11IN.pdf",
+  img:"",
+  hours:"Wed–Sat 5:30–11pm · Sun 5:30–9pm · Brunch Sat–Sun 11am–4pm · Closed Mon–Tue",
+  desc:"Chopped-winner Giorgio Rapicavoli's eclectic modern-American — an ever-changing menu of inventive small plates and an open kitchen.",
+  items:[["Pasta Carbonara","$39"],["Wagyu Steak Tartare","$22"],["Crispy Cauliflower & Cotija","$11"]],
+  pros:["Inventive, boundary-pushing food","Warm, attentive service","Great cocktails & desserts"],
+  cons:["On the pricey side","Small-plate portions","Closed Mon–Tue; hard reso"]},
+
+ {pick:0,name:"Nami Nori",cuisine:"Japanese temaki / hand rolls",cat:"Asian",area:"Design District",addr:"156 NE 41st St, Miami, FL 33137",lat:25.8140,lng:-80.1921,
+  google:"4.7",googleN:"529",yelp:"n/a",yelpN:"68",yelpUrl:"https://www.yelp.com/biz/nami-nori-design-district-miami",web:"https://www.naminori.us/design-district",menu:"https://www.naminori.us/menu-1",
+  img:"https://images.squarespace-cdn.com/content/v1/5ce5a075d10d8800011f0906/1570915703027-X67GNA5XT9H9YO2WXXCZ/190922_NAMINORI_360-4.jpg",
+  hours:"Mon–Sat 12–10pm · Sun 12–7pm",
+  desc:"Temaki bar (from the NYC original) — open-style hand rolls and 5-piece sets in a bright, beach-house-inspired Design District space.",
+  items:[["Signature Set (5 temaki)","$32"],["Spicy Lobster Temaki","$12"],["Starter Set (5 temaki)","$24"]],
+  pros:["Fresh, creative open hand rolls","Temaki sets are good value","Bright, sleek space + patio"],
+  cons:["Some rolls underwhelm","Non-roll items overpriced","Cramped & hectic at peak"]},
+
+ {pick:0,name:"L'Atelier de Joël Robuchon",cuisine:"French (2★)",cat:"French",area:"Design District",addr:"151 NE 41st St, Miami, FL 33137",lat:25.8145,lng:-80.1920,
+  google:"4.4",googleN:"693",yelp:"n/a",yelpN:"208",yelpUrl:"https://www.yelp.com/biz/l-atelier-de-joel-robuchon-miami-2",web:"https://latelier-miami.com/",menu:"https://latelier-miami.com/menus/",
+  img:"https://latelier-miami.com/media_files/images/LAtelier_Counter_Cropped.max-1920x1920.jpg",
+  hours:"Tue–Wed 6–9:30pm · Thu 6–10pm · Fri 5:30–10pm · Sat 12–2:30pm & 5:30–10pm · Sun 6–9pm · Closed Mon",
+  desc:"South Florida's only two-Michelin-star restaurant — modern French at a 34-seat counter facing the open kitchen.",
+  items:[["Evolution Tasting (pp)","$295"],["Summer Tasting (pp)","$195"],["Le Caviar d'Italie 28g","$155"]],
+  pros:["Exquisite, precise French cuisine","Interactive open-kitchen counter","Polished Michelin service"],
+  cons:["Pacing can feel rushed","Very expensive with add-ons","Noisy room for two stars"]},
+
+ {pick:0,name:"The Den",cuisine:"Edomae omakase sushi",cat:"Asian",area:"Miami Beach",addr:"161 Ocean Dr, Miami Beach, FL 33139",lat:25.7704,lng:-80.1323,
+  google:"4.7",googleN:"76",yelp:"4.6",yelpN:"35",yelpUrl:"https://www.yelp.com/biz/the-den-miami-beach-4",web:"https://www.azabumiami.com/the-den",menu:"https://www.azabumiami.com/menu/the-den",
+  img:"https://images.squarespace-cdn.com/content/v1/693719b2d1dea13e26a89ba2/e774d305-6dc8-42f9-8e87-30e3550b53de/imgi_27_AZABU-LOLOS3143-019-2048x1365.jpg",
+  hours:"Tue–Sat seatings 7pm & 9:15pm · Closed Sun–Mon",
+  desc:"A Michelin-starred hidden Edomae omakase inside Azabu Miami Beach (Stanton Hotel) — ~16 seats, fish flown from Toyosu.",
+  items:[["Omakase (pp)","$150"],["Otoro Nigiri","$18"],["Smoked Salmon Nigiri","$14"]],
+  pros:["Precise Edomae sushi, top-tier rice","Calm, intimate counter service","Strong value for Michelin omakase"],
+  cons:["Portions small; some leave hungry","Minimalist plating","Prepaid, strict cancellation"]},
+
+ {pick:0,name:"Stubborn Seed",cuisine:"Modern American tasting (Michelin)",cat:"Tasting",area:"South of Fifth",addr:"101 Washington Ave, Miami Beach, FL 33139",lat:25.7702,lng:-80.1349,
+  google:"4.5",googleN:"1,438",yelp:"4.0",yelpN:"641",yelpUrl:"https://www.yelp.com/biz/stubborn-seed-miami-beach",web:"https://www.stubbornseed.com/",menu:"https://www.stubbornseed.com/menu",
+  img:"https://media.timeout.com/images/106320395/image.jpg",
+  hours:"Sun–Thu 6–10pm · Fri–Sat 6–11pm",
+  desc:"Michelin-starred modern American tasting from Top Chef winner Jeremy Ford — bold, farm-sourced, Latin/Asian-accented.",
+  items:[["Tasting Menu (pp)","$200"],["8-course Tasting","$175"],["6-course Tasting","$95"]],
+  pros:["Creative, beautifully plated courses","Polished service, open kitchen","Hyper-fresh, farm-sourced produce"],
+  cons:["Small portions for the price","Some inconsistency post-star","Loud acoustics"]},
+
+ {pick:0,name:"Delilah Miami",cuisine:"American supper club",cat:"American",area:"Brickell Key",addr:"301 Brickell Key Dr, Miami, FL 33131",lat:25.7659,lng:-80.1855,
+  google:"4.8",googleN:"640",yelp:"~3.5*",yelpN:"179",yelpUrl:"https://www.yelp.com/biz/delilah-miami",web:"https://www.delilahrestaurants.com/location/miami/",menu:"https://www.delilahrestaurants.com/miami-menus/",
+  img:"https://hwoodgroup.com/wp-content/uploads/2023/12/web_DELILAH-ARCHITECTURAL-SHOOT-12.10.238628-HDR-Edit.jpg",
+  hours:"Tue–Sat 5pm–2am · Sun 7pm–2am · Closed Mon",
+  desc:"h.wood Group's glamorous 1920s-style supper club on Brickell Key — elevated American fare with live jazz till late.",
+  items:[["Jumbo Lump Crab Cake","$35"],["Lobster Arrabbiata","$66"],["S'More Flambé","$48"]],
+  pros:["Stunning waterfront 1920s decor","Live jazz & entertainment","Strong cocktail/wine program"],
+  cons:["Food mediocre for the price","Service/host-stand chaos","Very loud late"]},
+
+ {pick:0,name:"Doya",cuisine:"Aegean / Turkish-Med meze",cat:"Mediterranean",area:"Wynwood",addr:"347 NW 24th St, Miami, FL 33127",lat:25.8002,lng:-80.2014,
+  google:"4.7",googleN:"7,581",yelp:"~4.5*",yelpN:"617",yelpUrl:"https://www.yelp.com/biz/doya-miami",web:"https://doyarestaurant.com/",menu:"https://doyarestaurant.com/our-menus/",
+  img:"https://doyarestaurant.com/wp-content/smush-webp/2024/04/banner-min.jpg.webp",
+  hours:"Sun–Thu 12–10:45pm · Fri–Sat 12–11:45pm",
+  desc:"Michelin Bib Gourmand modern Aegean meze in Wynwood — wood/coal-fired Greek & Turkish plates and a lush garden patio.",
+  items:[["Lamb Chops","$46"],["Grilled Octopus","$32"],["Short-Rib Baklava","$28"]],
+  pros:["Standout wood-fired plates","Lush garden patio, lively","Easy to book; fast food out"],
+  cons:["Indoor room very loud","Weekend waits","Wynwood parking tough"]},
+
+ {pick:0,name:"Ariete",cuisine:"Contemporary Cuban-American (Michelin)",cat:"American",area:"Coconut Grove",addr:"3540 Main Hwy, Miami, FL 33133",lat:25.7251,lng:-80.2454,
+  google:"4.5",googleN:"",yelp:"~4.7*",yelpN:"746",yelpUrl:"https://www.yelp.com/biz/ariete-miami-2",web:"https://arietecoconutgrove.com/",menu:"https://arietecoconutgrove.com/",
+  img:"https://arietecoconutgrove.com/wp-content/uploads/ARIETE-Exterior.webp",
+  hours:"Sun–Thu 5:30–10pm · Fri–Sat 5:30–11pm",
+  desc:"Michelin-starred Coconut Grove restaurant from chef Michael Beltran — contemporary Cuban-American with French technique.",
+  items:[["Versos Sencillos Tasting (pp)","$180"],["Duck Press (for two)","$160"],["Frita Cubana","$24"]],
+  pros:["Inventive Cuban-American + French technique","Impeccable, attentive service","Michelin quality, intimate"],
+  cons:["Loud atmosphere","~$250–300+ pp before drinks","Tight, cramped room"]},
+
+ {pick:0,name:"Krüs Kitchen",cuisine:"Seasonal New American (Green Star)",cat:"American",area:"Coconut Grove",addr:"3413 Main Hwy, Miami, FL 33133",lat:25.7271,lng:-80.2419,
+  google:"4.6",googleN:"",yelp:"~4.4*",yelpN:"96",yelpUrl:"https://www.yelp.com/biz/kru-s-kitchen-miami",web:"https://www.kruskitchen.com/",menu:"https://www.kruskitchen.com/menu",
+  img:"",
+  hours:"Tue–Thu & Sun 5:30–10pm · Fri–Sat 5:30–11pm · Brunch Sat–Sun 11am–3:30pm · Closed Mon",
+  desc:"Michelin Green Star seasonal New American & natural wine bar above Los Félix — a daily-changing menu from chef Sebastián Vargas.",
+  items:[["Heirloom Tomato & Tuna Tartare","$24"],["Smoked Coconut Rice w/ Crab","$28"],["Iberico Pork Chop","$58"]],
+  pros:["Green Star, hyper-seasonal sourcing","Strong natural-wine program","Intimate, design-forward room"],
+  cons:["Menu changes constantly","Small space, hard to book","Pricey for portions"]},
+
+ {pick:0,name:"Los Félix",cuisine:"Modern Mexican (Michelin)",cat:"Mexican",area:"Coconut Grove",addr:"3413 Main Hwy, Miami, FL 33133",lat:25.7270,lng:-80.2421,
+  google:"4.5",googleN:"",yelp:"~4.3*",yelpN:"234",yelpUrl:"https://www.yelp.com/biz/los-felix-miami-miami",web:"https://www.losfelixmiami.com/",menu:"https://www.losfelixmiami.com/menu",
+  img:"",
+  hours:"Tue–Thu 5:30–10pm · Fri–Sat 5:30–11pm · Brunch Sat–Sun 11am–3pm · Closed Mon",
+  desc:"One-Michelin-star, Green Star modern Mexican built around an in-house molino nixtamalizing heirloom corn daily for from-scratch tortillas.",
+  items:[["Blue Crab Arepa","$36"],["Trumpet Mushrooms","$28"],["Mango Granita","$16"]],
+  pros:["Michelin Star + Green Star","Exceptional house masa & tortillas","Striking Meso-American menu"],
+  cons:["Masa-heavy can feel one-note","Hard reservations","Higher-end pricing"]},
+
+ {pick:0,name:"Phuc Yea",cuisine:"Vietnamese-Cajun",cat:"Asian",area:"MiMo",addr:"7100 Biscayne Blvd, Miami, FL 33138",lat:25.8378,lng:-80.1897,
+  google:"4.5",googleN:"",yelp:"~4.3*",yelpN:"995",yelpUrl:"https://www.yelp.com/biz/phuc-yea-miami-2",web:"https://phucyea.com/",menu:"https://phucyea.com/menus/",
+  img:"https://phucyea.com/wp-content/uploads/2025/07/imgi_10_5277DSC00153-1022x1024.jpg",
+  hours:"Tue–Thu 5–10pm · Fri–Sat 5–11pm · Sun 5–10pm · Closed Mon",
+  desc:"Lively Viet-Cajun spot in MiMo from chef Cesar Zapata — bold shareable plates; four-time Michelin Bib Gourmand.",
+  items:[["Crispy Imperial Rolls","$18"],["Garlic-Butter Egg Noodles","$18"],["Caramel Chicken Wings","$18"]],
+  pros:["4× Michelin Bib Gourmand","Bold, generous shareable plates","Fun energy, strong happy hour"],
+  cons:["Flavors can be uneven","Loud, club-like vibe","~$100 pp with drinks"]},
+
+ {pick:0,name:"Ghee Indian Kitchen",cuisine:"Modern Indian",cat:"Asian",area:"Downtown Dadeland",addr:"8965 SW 72nd Pl, Miami, FL 33156",lat:25.6886,lng:-80.3107,
+  google:"4.6",googleN:"",yelp:"~4.4*",yelpN:"916",yelpUrl:"https://www.yelp.com/biz/ghee-indian-kitchen-miami-5",web:"https://www.gheeindiankitchen.com/",menu:"https://gheeindiankitchen.com/downtown-dadeland-menus/",
+  img:"https://images.getbento.com/accounts/16458ac94bdf2a2e2ce87889467ac888/media/images/71640ghee_3749.JPG",
+  hours:"Lunch daily 12–2:30pm · Dinner Sun–Thu 5–9pm · Fri–Sat 5–9:30pm",
+  desc:"Chef Niven Patel's farm-to-table modern Indian — much produce from his own Rancho Patel farm; four-time Michelin Bib Gourmand.",
+  items:[["Beef Korma","$38"],["Chicken Tikka Masala","$22"],["Brie & Truffle Naan","$16"]],
+  pros:["4× Michelin Bib Gourmand","Farm-to-table from chef's own farm","Inventive Indian-Miami dishes"],
+  cons:["Strip-mall setting","Popular & busy","Mains pricey for Indian"]}
+];
+
+const ORLANDO=[
+ {pick:0,name:"The Pinery",cuisine:"Southern / Floridian",cat:"Southern",area:"Ivanhoe Village",addr:"295 NE Ivanhoe Blvd, Orlando, FL 32804",lat:28.5656,lng:-81.3741,
+  google:"4.5",googleN:"~700",yelp:"~4.5*",yelpN:"~353",yelpUrl:"https://www.yelp.com/biz/the-pinery-orlando",web:"https://thepineryorlando.com/",menu:"https://thepineryorlando.com/orlando-the-pinery-food-menu",
+  img:"https://static.spotapps.co/website_images/ab_websites/111059_website_v1/redesign/pi_new.png",
+  hours:"Mon–Thu 4–10pm · Fri–Sat 4–11pm · Sun 11am–9pm",
+  desc:"Chef-driven Southern/Floridian spot on Lake Ivanhoe with sunset views; Michelin Guide-recommended.",
+  items:[["Crab-Stuffed Salmon","$38"],["Ivanhoe Short Rib","$36"],["Shrimp n' Grits","$32"]],
+  pros:["Lakefront sunset views","Filet & fried green tomatoes","Strong happy-hour value"],
+  cons:["Inconsistent service","Entrees pricey for portion","Uneven execution at times"]},
+
+ {pick:0,name:"Norman's",cuisine:"New World fine dining (Van Aken)",cat:"Tasting",area:"Restaurant Row (Dr. Phillips)",addr:"7924 Via Dellagio Way, Orlando, FL 32819",lat:28.4517,lng:-81.4923,
+  google:"n/a",googleN:"",yelp:"~4.0*",yelpN:"~225",yelpUrl:"https://www.yelp.com/biz/normans-orlando",web:"https://www.normans.com/",menu:"https://www.normans.com/orlando-norman-s-orlando-menus",
+  img:"https://framerusercontent.com/images/1YmE0CZN66WwQS3MHk4nZwiztMk.jpg",
+  hours:"Hours vary — confirm on site",
+  desc:"Chef Norman Van Aken's 'New World Cuisine' (Latin-Caribbean-Asian) prix-fixe & tasting menus. NOTE: relocated 2025 from the Ritz-Carlton Grande Lakes to this independent Restaurant Row location — confirm Exclusive Tables status before booking.",
+  items:[["3-Course Prix Fixe (pp)","$75"],["Tasting Menu (pp)","$155"],["Key West Yellowtail Snapper","$59"]],
+  pros:["Excellent, attentive service","Standout bread service","High-quality seafood"],
+  cons:["Pricey, especially apps","Can get noisy","Recently relocated — verify"]}
+];
+
+const ATLANTA=[
+ {pick:0,name:"Lazy Betty",cuisine:"Modern tasting menu (Michelin)",cat:"Tasting",area:"Midtown",addr:"999 Peachtree St NE, Atlanta, GA 30309",lat:33.7813,lng:-84.3838,
+  google:"4.8",googleN:"1,000+",yelp:"4.5",yelpN:"307",yelpUrl:"https://www.yelp.com/biz/lazy-betty-atlanta-2",web:"https://www.lazybettyatl.com/",menu:"https://www.lazybettyatl.com/menu",
+  img:"",
+  hours:"Reservations only — nightly dinner seatings (confirm)",
+  desc:"Michelin-starred contemporary tasting-menu destination from chefs Ron Hsu & Aaron Phillips, now in an elegant Midtown space.",
+  items:[["Lazy Betty Tasting (pp)","$225"],["Chef's Tasting (pp)","$225+"],["Beverage Pairing","mkt"]],
+  pros:["Michelin one-star caliber","Inventive, beautifully plated","Polished ~3.5-hr experience"],
+  cons:["Expensive, prix-fixe only","Hard to get reservations","Long seating commitment"]},
+
+ {pick:0,name:"Mujō",cuisine:"Edomae omakase sushi (Michelin)",cat:"Asian",area:"West Midtown",addr:"691 14th St NW, Ste C, Atlanta, GA 30318",lat:33.7872,lng:-84.4054,
+  google:"4.7",googleN:"300+",yelp:"~4.3*",yelpN:"69",yelpUrl:"https://www.yelp.com/biz/mujo-atlanta-2",web:"https://www.mujoatl.com/",menu:"https://www.mujoatl.com/sushi-bar",
+  img:"",
+  hours:"Wed–Sat 5:30–9:30pm · Closed Sun–Tue",
+  desc:"Intimate one-Michelin-star, omakase-only Edomae sushiya from chef J. Trent Harris — U-shaped cypress counter, fish flown from Japan.",
+  items:[["Seasonal Omakase (pp)","$255"],["Corkage (750mL)","$100"],["Beverage Pairing","mkt"]],
+  pros:["Top-tier Michelin omakase","Pristine fish from Japan","Intimate, attentive counter"],
+  cons:["Very high price","Reservations sell out fast","Omakase-only, limited seats"]},
+
+ {pick:0,name:"The Optimist",cuisine:"Seafood & oyster bar",cat:"Seafood",area:"West Midtown",addr:"914 Howell Mill Rd NW, Atlanta, GA 30318",lat:33.7847,lng:-84.4128,
+  google:"4.6",googleN:"5,000+",yelp:"4.5",yelpN:"2,401",yelpUrl:"https://www.yelp.com/biz/the-optimist-atlanta",web:"https://www.theoptimistrestaurant.com/atlanta",menu:"https://www.theoptimistrestaurant.com/atlanta",
+  img:"",
+  hours:"Mon–Thu 5–10pm · Fri 5–11pm · Sat 3–11pm · Sun 3–10pm",
+  desc:"Chef Ford Fry's buzzy seaside fish-camp — sustainable seafood and wood-fired fare around a surfboard-shaped oyster bar.",
+  items:[["The Refuge Seafood Platter","$86"],["Maine Lobster Roll","mkt"],["Peel & Eat Georgia Shrimp (½ lb)","$11"]],
+  pros:["Among Atlanta's best seafood","Lively, oyster happy hour","High-quality sustainable fish"],
+  cons:["Loud and crowded","Lobster roll at market price","Weekend reservations a must"]},
+
+ {pick:0,name:"Little Sparrow",cuisine:"French bistro / brasserie",cat:"French",area:"West Midtown",addr:"1198 Howell Mill Rd, Ste 18, Atlanta, GA 30318",lat:33.7917,lng:-84.4135,
+  google:"4.5",googleN:"500+",yelp:"~4.2*",yelpN:"186",yelpUrl:"https://www.yelp.com/biz/little-sparrow-atlanta",web:"https://www.littlesparrowatl.com/",menu:"https://www.littlesparrowatl.com/menus",
+  img:"",
+  hours:"Sun–Thu 5–10pm · Fri–Sat 5–11pm · Brunch Sat–Sun 10:30am–2:30pm",
+  desc:"Chic Parisian-inspired bistro from Ford Fry — brasserie classics with Southern flair; Esquire Best New Restaurant 2024.",
+  items:[["Steak Frites","$43"],["French Onion Soup","mkt"],["Dry-Aged Burger","mkt"]],
+  pros:["Esquire Best New Restaurant","Cozy, stylish bistro","Strong classics & soufflé"],
+  cons:["Compact menu","Dinner-focused hours","Some sides priced high"]},
+
+ {pick:0,name:"Yebo Beach Haus",cuisine:"New American / South African",cat:"American",area:"Buckhead",addr:"56 E Andrews Dr NW, Atlanta, GA 30305",lat:33.8404,lng:-84.3839,
+  google:"4.4",googleN:"2,000+",yelp:"~4.0*",yelpN:"476",yelpUrl:"https://www.yelp.com/biz/yebo-beach-haus-atlanta",web:"https://yebobeachhaus.com/",menu:"https://yebobeachhaus.com/our-menu/",
+  img:"",
+  hours:"Mon–Thu 11:30am–10pm · Fri–Sat 11:30am–11pm · Closed Sun",
+  desc:"Coastal Buckhead spot blending New American with South African flavors in a beach-bungalow setting with a courtyard patio.",
+  items:[["Tuna Tataki","$16"],["Charcuterie Platter","$32"],["Biltong","$11"]],
+  pros:["Distinctive South African–American menu","Transportive beach-bungalow vibe","Great for groups"],
+  cons:["Can get loud","Service slow at peak","Some inconsistency"]},
+
+ {pick:0,name:"Canoe",cuisine:"Refined seasonal American",cat:"American",area:"Vinings",addr:"4199 Paces Ferry Rd SE, Atlanta, GA 30339",lat:33.8612,lng:-84.4663,
+  google:"4.6",googleN:"6,800+",yelp:"~4.4*",yelpN:"2,571",yelpUrl:"https://www.yelp.com/biz/canoe-atlanta-2",web:"https://canoeatl.com/",menu:"https://canoeatl.com/menu/",
+  img:"",
+  hours:"Lunch Mon–Fri 11:30am–2pm · Dinner Sun–Thu 5:30–9:30pm · Fri–Sat 5:30–10pm · Sun brunch 10:30am–2:30pm",
+  desc:"An Atlanta institution since 1995 on the Chattahoochee River in Vinings — refined seasonal American with a lush garden patio.",
+  items:[["Maple-Brined Duck Breast","$52"],["Australian Lamb Sirloin","$49"],["Blue Ridge Rabbit","$40"]],
+  pros:["Gorgeous riverside garden","Polished fine-dining service","Strong seasonal/game menu"],
+  cons:["Pricey","Far out in Vinings","Reservations essential"]},
+
+ {pick:0,name:"Ray's on the River",cuisine:"Steak & seafood, riverside",cat:"Seafood",area:"Sandy Springs",addr:"6700 Powers Ferry Rd NW, Sandy Springs, GA 30339",lat:33.9070,lng:-84.4459,
+  google:"4.7",googleN:"8,700+",yelp:"~4.0*",yelpN:"1,699",yelpUrl:"https://www.yelp.com/biz/rays-on-the-river-sandy-springs-2",web:"https://www.raysontheriver.com/",menu:"https://www.raysontheriver.com/menus/",
+  img:"",
+  hours:"Mon–Thu 11:30am–10pm · Fri 11:30am–11pm · Sat 12–11pm · Sun 11am–4pm & 5–9pm",
+  desc:"A 40-year Chattahoochee riverside landmark — daily-flown seafood, prime steaks, a Wine Spectator list, and a lavish Sunday brunch.",
+  items:[["Filet Mignon 12oz","$47"],["Jumbo Lump Crab Cake","$37"],["Cedar-Plank Salmon","$37"]],
+  pros:["Scenic riverside views","Fresh daily seafood & prime steaks","Award-winning Sunday brunch"],
+  cons:["Food can be inconsistent","Feels a bit old-school","Pricey entrees"]},
+
+ {pick:0,name:"The Garden Room",cuisine:"New American, seafood",cat:"American",area:"Buckhead",addr:"88 W Paces Ferry Rd NW, Atlanta, GA 30305",lat:33.8427,lng:-84.3823,
+  google:"3.8",googleN:"1,240+",yelp:"~3.5*",yelpN:"571",yelpUrl:"https://www.yelp.com/biz/the-garden-room-atlanta-2",web:"https://thegardenroomatlanta.com/",menu:"https://thegardenroomatlanta.com/garden-room-menus/",
+  img:"",
+  hours:"Wed–Thu 5–11pm · Fri–Sat 3pm–12am · Sun brunch 11am–3pm · Closed Mon–Tue",
+  desc:"A dramatic greenhouse-style dining room near the St. Regis — florals under glass with live entertainment; more scene than food per reviews.",
+  items:[["Black Truffle Pillows","$35"],["Wagyu Pappardelle","$30"],["Lobster Roll","$18"]],
+  pros:["Stunning botanical greenhouse decor","Lively scene, live entertainment","Instagram-famous ambiance"],
+  cons:["Food hit-or-miss for the price","Premium tables $1,500–$3,000 min","Service complaints"]},
+
+ {pick:0,name:"The Alden",cuisine:"New American (chef's counter)",cat:"American",area:"Chamblee",addr:"5070 Peachtree Blvd, Ste B-140, Chamblee, GA 30341",lat:33.8895,lng:-84.3030,
+  google:"4.6",googleN:"450+",yelp:"4.5",yelpN:"341",yelpUrl:"https://www.yelp.com/biz/the-alden-chamblee",web:"https://thealdenrestaurant.com/",menu:"https://thealdenrestaurant.com/dinner-menu/",
+  img:"",
+  hours:"⚠ Temporarily closed (building fire, May 2026) — verify",
+  desc:"Chef Jared Hucks's Michelin-recommended New American with an 11-seat chef's counter. NOTE: temporarily closed after a May 2026 building fire — no reopening date.",
+  items:[["Pintxo Plate (3)","$12"],["Chef's Counter 5-course","mkt"],["7-course Tasting","mkt"]],
+  pros:["Michelin-recommended chef-driven","Intimate 11-seat tasting counter","Daily seasonal, local sourcing"],
+  cons:["⚠ Temporarily closed (fire)","In Chamblee (not Sandy Springs)","Limited seating, hard to book"]}
+];
+
 const CITIES={
-  la:{label:"Los Angeles",socal:true,data:LA},
-  sd:{label:"San Diego",socal:true,data:SD},
-  carlsbad:{label:"Carlsbad / North County",socal:true,data:CB},
-  sf:{label:"San Francisco",socal:false,data:SF}
+  la:{label:"Los Angeles",irvine:true,tz:'America/Los_Angeles',data:LA},
+  sd:{label:"San Diego",tz:'America/Los_Angeles',data:SD},
+  carlsbad:{label:"Carlsbad / North County",tz:'America/Los_Angeles',data:CB},
+  sf:{label:"San Francisco",tz:'America/Los_Angeles',data:SF},
+  tampa:{label:"Tampa Bay",tz:'America/New_York',data:TAMPA},
+  miami:{label:"Miami",tz:'America/New_York',data:MIAMI},
+  orlando:{label:"Orlando",tz:'America/New_York',data:ORLANDO},
+  atlanta:{label:"Atlanta",tz:'America/New_York',data:ATLANTA}
 };
 let R=LA, CITY=CITIES.la;
 
@@ -825,7 +1113,28 @@ const CSR={
  "Jeune et Jolie":{v:"verified",g:"https://www.toasttab.com/jeune-et-jolie/giftcards"},
  "Lilo":{v:"unknown",g:"https://order.toasttab.com/egiftcards/lilo-2598-state-street"},
  "Herb & Sea":{v:"unknown",g:"https://herbandsea.securetree.com/egift-card"},
- "Vintana Wine + Dine":{v:"unknown",g:"https://dinecrg.myguestaccount.com/en-us/guest/egift?page=cardInfo"}
+ "Vintana Wine + Dine":{v:"unknown",g:"https://dinecrg.myguestaccount.com/en-us/guest/egift?page=cardInfo"},
+ "Psomi":{v:"verified",g:"https://www.toasttab.com/psomi/giftcards"},
+ "Predalina":{v:"unknown",g:"https://order.toasttab.com/egiftcards/predalina-1001-e-cumberland-ave"},
+ "Fortu":{v:"verified",g:"https://www.toasttab.com/fortu-st-pete-95-central-avenue/giftcards"},
+ "Il Ritorno":{v:"unknown",g:"https://onlineorder.focuspos.com/7489/gift"},
+ "The Pinery":{v:"unknown",g:""},
+ "Norman's":{v:"verified",g:"https://order.toasttab.com/egiftcards/normans-restaurant-7924-via-dellagio-way"},
+ "Zitz Sum":{v:"unknown",g:"https://zitzsum.inkind.com/"},
+ "Luca Osteria":{v:"verified",g:"https://www.toasttab.com/luca-osteria-116-giralda-ave/giftcards"},
+ "Nami Nori":{v:"unknown",g:"https://order.toasttab.com/egiftcards/nami-nori"},
+ "Delilah Miami":{v:"denied",g:""},
+ "Krüs Kitchen":{v:"unknown",g:"https://www.toasttab.com/krus%20kitchen/giftcards"},
+ "Los Félix":{v:"unknown",g:"https://www.toasttab.com/los-felix-3413-main-highway-4402/giftcards"},
+ "Phuc Yea":{v:"unknown",g:"https://shop.phucyea.com/product-details/product/gift-cards/"},
+ "Lazy Betty":{v:"unknown",g:"https://tabit.us/gift-cards/create-card?accountGuid=90F13E8E-3395-4C25-9B19-65EE948826E9&step=0"},
+ "Mujō":{v:"unknown",g:"https://chgrestaurants.securetree.com/"},
+ "The Optimist":{v:"unknown",g:"https://ccp.mobileappsuite.com/kiosk/purchase_gift_card/b/411"},
+ "Little Sparrow":{v:"unknown",g:"https://ccp.mobileappsuite.com/kiosk/purchase_gift_card/b/413"},
+ "Canoe":{v:"unknown",g:"https://canoeatl.com/gift-cards/"},
+ "Ray's on the River":{v:"verified",g:"https://order.toasttab.com/egiftcards/rays-on-the-river-sandy-springs-6700-powers-ferry-rd-nw"},
+ "The Garden Room":{v:"unknown",g:"https://tavistockrestaurantcollection.com/giftcards/"},
+ "The Alden":{v:"verified",g:"https://thealdenrestaurant.cardfoundry.com/giftcards"}
 };
 
 const dirLink=a=>"https://www.google.com/maps/dir/Irvine,+CA/"+encodeURIComponent(a);
@@ -839,7 +1148,7 @@ const dishPic=(r,it)=> (it[2]&&it[2].includes('/menu/'))
 // ---- dynamic Open/Closed in Pacific time (parses the hours string) ----
 const DAYI={sun:0,mon:1,tue:2,wed:3,thu:4,fri:5,sat:6};
 function pacNow(){
-  const f=new Intl.DateTimeFormat('en-US',{timeZone:'America/Los_Angeles',weekday:'short',hour:'2-digit',minute:'2-digit',hour12:false});
+  const f=new Intl.DateTimeFormat('en-US',{timeZone:(CITY&&CITY.tz)||'America/Los_Angeles',weekday:'short',hour:'2-digit',minute:'2-digit',hour12:false});
   const p={}; f.formatToParts(new Date()).forEach(x=>p[x.type]=x.value);
   return {day:DAYI[(p.weekday||'').toLowerCase()], min:((+p.hour)%24)*60+(+p.minute)};
 }
@@ -927,6 +1236,7 @@ function cardHTML(r){
   const statusBadge=st.s==='unknown'?'':`<span class="status ${st.s}">● ${st.t}</span>`;
   const csrBadge=r.csrv?`<span class="csr ${CSRLBL[r.csrv][0]}" title="Sapphire $300 dining-credit status — community-sourced (csr-dining.edgerunners.cloud)">${CSRLBL[r.csrv][1]}</span>`:'';
   const giftLink=r.gift?`<a class="gift" href="${r.gift}" target="_blank" rel="noopener" title="Gift-card link — a known way to trigger the dining credit">🎁 ${/toasttab/.test(r.gift)?'Toast gift card':'Gift card'}</a>`:'';
+  const distLine=CITY.irvine?`<div class="rdist">🚗 ${r.dist} from Irvine</div>`:'';
   return `<div class="rcard" id="card-${r.rank}" data-rank="${r.rank}">
     <div class="rhead">
       <div class="thumb"><div class="fb">${r.name}</div>${thumb}<span class="num">${r.rank}</span></div>
@@ -937,7 +1247,7 @@ function cardHTML(r){
           <a class="rat" href="${gUrl(r)}" target="_blank" rel="noopener"><span class="g">Google ★ ${r.google}</span>${r.googleN?` (${r.googleN})`:''} <span class="ext">↗</span></a>
           <a class="rat" href="${r.yelpUrl}" target="_blank" rel="noopener"><span class="y">Yelp ★ ${r.yelp}</span> (${r.yelpN}) <span class="ext">↗</span></a>
         </div>
-        <div class="rdist">🚗 ${r.dist} from Irvine</div>
+        ${distLine}
       </div>
     </div>
     <div class="rbody">
@@ -985,12 +1295,12 @@ function render(skipFit){
   list.forEach(r=>{
     const m=L.marker([r.lat,r.lng],{icon:pinIcon(r.rank,r.pick?'#d99a2b':'#c0182b')})
       .bindPopup(`<b>#${r.rank} ${r.name}</b>${r.pick?' ⭐':''}<br>${r.cuisine} · ${r.area}<br>
-        ★ Google ${r.google} · Yelp ${r.yelp}<br>🚗 ${r.dist}<br>
+        ★ Google ${r.google} · Yelp ${r.yelp}<br>${CITY.irvine?'🚗 '+r.dist+'<br>':''}
         <a href="#card-${r.rank}" onclick="flash(${r.rank})">See details ↓</a> ·
         <a href="${dirLink(r.addr)}" target="_blank">Directions →</a>`);
     m.addTo(markerLayer); markers[r.rank]=m; pts.push([r.lat,r.lng]);
   });
-  if(CITY.socal){homeMarker.addTo(map); pts.push([IRVINE.lat,IRVINE.lng]);}
+  if(CITY.irvine){homeMarker.addTo(map); pts.push([IRVINE.lat,IRVINE.lng]);}
   else if(map.hasLayer(homeMarker)){map.removeLayer(homeMarker);}
   if(!skipFit && pts.length)map.fitBounds(pts,{padding:[40,40]});
   bindCards();
@@ -1026,6 +1336,11 @@ function setCity(key){
   CITY=CITIES[key]; R=CITY.data; R.forEach((r,i)=>r.rank=i+1);
   R.forEach(r=>{const e=EXTRA[r.name]; if(e){ if(e.hours)r.hours=e.hours; if(e.img&&!r.img)r.img=e.img; } const cs=CSR[r.name]; if(cs){ r.csrv=cs.v; r.gift=cs.g; } });
   state.filter="all";
+  const laOnly=!!CITY.irvine;
+  document.getElementById('sort-vibe').style.display=laOnly?'':'none';
+  document.getElementById('sort-dist').style.display=laOnly?'':'none';
+  state.sort=laOnly?'vibe':'rating';
+  document.querySelectorAll('.sort').forEach(x=>x.classList.toggle('active',x.dataset.sort===state.sort));
   buildFilters();
   render();
 }
